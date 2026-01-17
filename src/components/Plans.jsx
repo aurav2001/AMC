@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Check, Cpu, Server, Database } from 'lucide-react';
+import { Check, Cpu, Server, Database, Clock, Shield, Award, Headphones, Users, Wrench } from 'lucide-react';
 import { plans } from '../data/plans';
+import desktopEngineerImg from '../assets/desktop_engineer.png';
 
 const iconMap = {
     Cpu: <Cpu className="w-12 h-12 text-blue-500" />,
@@ -58,6 +59,84 @@ const Plans = () => {
                             </div>
                         </div>
                     ))}
+                </div>
+
+                {/* Enquiry Section with Desktop Engineer */}
+                <div className="mt-20 bg-gradient-to-r from-slate-50 to-blue-50 rounded-3xl p-8 md:p-12 shadow-lg">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                        {/* Left Side - Info Cards */}
+                        <div className="space-y-6">
+                            <h3 className="text-3xl font-bold text-slate-900 mb-6">
+                                Why Choose <span className="text-blue-600">Us?</span>
+                            </h3>
+                            <p className="text-slate-600 mb-8">
+                                We are a trusted team of desktop engineers committed to keeping your systems running smoothly. With years of experience and dedication, we provide top-notch IT support.
+                            </p>
+
+                            {/* Info Cards Grid */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div className="bg-white rounded-xl p-5 shadow-md hover:shadow-lg transition-shadow border-l-4 border-blue-500">
+                                    <div className="flex items-center gap-3 mb-2">
+                                        <Award className="w-8 h-8 text-blue-500" />
+                                        <h4 className="font-bold text-slate-800">10+ Years</h4>
+                                    </div>
+                                    <p className="text-sm text-slate-500">Industry Experience</p>
+                                </div>
+
+                                <div className="bg-white rounded-xl p-5 shadow-md hover:shadow-lg transition-shadow border-l-4 border-green-500">
+                                    <div className="flex items-center gap-3 mb-2">
+                                        <Users className="w-8 h-8 text-green-500" />
+                                        <h4 className="font-bold text-slate-800">500+ Clients</h4>
+                                    </div>
+                                    <p className="text-sm text-slate-500">Trusted Partners</p>
+                                </div>
+
+                                <div className="bg-white rounded-xl p-5 shadow-md hover:shadow-lg transition-shadow border-l-4 border-purple-500">
+                                    <div className="flex items-center gap-3 mb-2">
+                                        <Headphones className="w-8 h-8 text-purple-500" />
+                                        <h4 className="font-bold text-slate-800">24/7 Support</h4>
+                                    </div>
+                                    <p className="text-sm text-slate-500">Always Available</p>
+                                </div>
+
+                                <div className="bg-white rounded-xl p-5 shadow-md hover:shadow-lg transition-shadow border-l-4 border-orange-500">
+                                    <div className="flex items-center gap-3 mb-2">
+                                        <Wrench className="w-8 h-8 text-orange-500" />
+                                        <h4 className="font-bold text-slate-800">Expert Team</h4>
+                                    </div>
+                                    <p className="text-sm text-slate-500">Certified Engineers</p>
+                                </div>
+                            </div>
+
+                            {/* CTA Button */}
+                            <div className="pt-4">
+                                <Link
+                                    to="/contact"
+                                    className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl"
+                                >
+                                    <Headphones className="w-5 h-5" />
+                                    Get Expert Consultation
+                                </Link>
+                            </div>
+                        </div>
+
+                        {/* Right Side - Desktop Engineer Image */}
+                        <div className="relative flex justify-center lg:justify-end">
+                            <div className="relative">
+                                <div className="absolute -inset-4 bg-gradient-to-r from-blue-400 to-purple-400 rounded-3xl blur-xl opacity-30"></div>
+                                <img
+                                    src={desktopEngineerImg}
+                                    alt="Desktop Engineer"
+                                    className="relative rounded-2xl shadow-2xl max-w-md w-full object-cover hover:scale-105 transition-transform duration-300"
+                                />
+                                {/* Floating Badge */}
+                                <div className="absolute -bottom-4 -left-4 bg-white px-6 py-3 rounded-xl shadow-lg flex items-center gap-2">
+                                    <Shield className="w-6 h-6 text-green-500" />
+                                    <span className="font-bold text-slate-800">100% Reliable</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
