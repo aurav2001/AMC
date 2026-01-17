@@ -4,6 +4,8 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import PlanDetails from './pages/PlanDetails';
+import Hardware from './pages/Hardware';
+import Software from './pages/Software';
 import Footer from './components/Footer';
 
 const WhatsAppButton = () => (
@@ -15,8 +17,8 @@ const WhatsAppButton = () => (
     aria-label="Chat on WhatsApp"
   >
     {/* Using a high-quality PNG icon */}
-    <img 
-      src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
       alt="WhatsApp"
       className="w-16 h-16 drop-shadow-lg"
     />
@@ -33,6 +35,8 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/plan/:id" element={<PlanDetails />} />
+          <Route path="/services/hardware" element={<Hardware />} />
+          <Route path="/services/software" element={<Software />} />
         </Routes>
         <Footer />
         <WhatsAppButton />
