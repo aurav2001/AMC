@@ -81,19 +81,12 @@ const stats = [
 const Software = () => {
     return (
         <div className="bg-slate-50 min-h-screen">
-            {/* Hero Section - Premium Purple Theme */}
-            <section className="relative bg-gradient-to-br from-purple-900 via-violet-900 to-indigo-900 text-white py-28 overflow-hidden">
-                {/* Animated Background Elements */}
-                <div className="absolute inset-0">
-                    <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-purple-500/30 rounded-full blur-[120px] animate-pulse" />
-                    <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-violet-500/30 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '1s' }} />
-                    <div className="absolute top-1/3 left-1/3 w-[400px] h-[400px] bg-fuchsia-500/20 rounded-full blur-[80px]" />
-                </div>
+            {/* Hero Section - Professional Design */}
+            <section className="relative bg-slate-900 text-white py-28 overflow-hidden">
+                {/* Background Pattern */}
+                <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
 
-                {/* Floating Code Elements */}
-                <div className="absolute top-20 left-10 text-purple-400/20 text-6xl font-mono">&lt;/&gt;</div>
-                <div className="absolute bottom-20 right-20 text-violet-400/20 text-5xl font-mono">{`{ }`}</div>
-                <div className="absolute top-1/2 right-10 text-fuchsia-400/20 text-4xl font-mono">( )</div>
+                {/* Floating Code Elements Removed for cleaner look */}
 
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -155,8 +148,7 @@ const Software = () => {
                             className="hidden lg:block"
                         >
                             <div className="relative">
-                                {/* Decorative Ring */}
-                                <div className="absolute -inset-4 bg-gradient-to-r from-purple-500 via-fuchsia-500 to-pink-500 rounded-3xl blur-xl opacity-40" />
+                                {/* Decorative Ring Removed */}
                                 <img
                                     src="/images/banner22.png"
                                     alt="Software Solutions"

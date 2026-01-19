@@ -1,7 +1,9 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Check, Cpu, Server, Database, Star, ArrowRight, FileCheck, Shield, Clock, Headphones, Wrench, Users, Zap } from 'lucide-react';
 import { plans } from '../data/plans';
+import amcImage from '../assets/amcs1.webp';
 
 const iconMap = {
     Cpu: <Cpu className="w-8 h-8" />,
@@ -66,16 +68,33 @@ const planComparison = [
     { feature: "Priority Queue", basic: "❌", standard: "✓", premium: "✓ VIP" },
 ];
 
+
+
+const videoList = [
+    "https://www.youtube.com/embed/wklUhIyg2DY?autoplay=1&mute=1&loop=1&playlist=wklUhIyg2DY", // Office Short
+    "https://www.youtube.com/embed/rOkSBf9CPaI?autoplay=1&mute=1&loop=1&playlist=rOkSBf9CPaI", // Laptop Typing Short
+];
+
 const Plans = () => {
+    const [selectedVideo, setSelectedVideo] = useState("");
+
+    useEffect(() => {
+        const random = videoList[Math.floor(Math.random() * videoList.length)];
+        setSelectedVideo(random);
+    }, []);
+
+
     return (
         <section id="plans" className="py-24 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
-            {/* Background Decorations */}
+            {/* ... Background Decorations ... */}
             <div className="absolute top-20 left-10 w-72 h-72 bg-blue-100 rounded-full blur-3xl opacity-40" />
             <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-100 rounded-full blur-3xl opacity-40" />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                {/* ... existing header ... */}
                 {/* Section Header */}
                 <div className="text-center mb-16">
+                    {/* ... copied from existing code ... */}
                     <motion.span
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -106,6 +125,112 @@ const Plans = () => {
                     </motion.p>
                 </div>
 
+                {/* Plan Overview - Image & Content Section */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16"
+                >
+                    <div className="relative rounded-3xl overflow-hidden shadow-xl group h-full max-h-[400px]">
+                        <img
+                            src={amcImage}
+                            alt="AMC Services"
+                            className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                    </div>
+                    <div>
+                        <span className="inline-block px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-xs font-bold uppercase tracking-wide mb-4">
+                            Premium Maintenance
+                        </span>
+                        <h3 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">Why Choose Our AMC?</h3>
+                        <p className="text-lg text-slate-600 leading-relaxed mb-6">
+                            We offer comprehensive annual maintenance contracts designed to keep your IT infrastructure running at peak performance.
+                            Our plans are tailored to ensure zero downtime, data security, and extended hardware life for businesses of all sizes.
+                        </p>
+                        <ul className="space-y-4">
+                            {[
+                                "24/7 Priority Support Access",
+                                "Regular Preventive Maintenance Visits",
+                                "Genuine Parts & Software Licensing",
+                                "ISO Certified Expert Technicians"
+                            ].map((item, i) => (
+                                <li key={i} className="flex items-center gap-3">
+                                    <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0">
+                                        <Check className="w-4 h-4" />
+                                    </div>
+                                    <span className="text-slate-700 font-medium">{item}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </motion.div>
+
+                {/* Random Video Section */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-slate-100 mb-16 overflow-hidden relative"
+                >
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                        <div>
+                            <span className="inline-flex items-center gap-2 px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-semibold mb-4">
+                                <Zap className="w-4 h-4" />
+                                Live Demo
+                            </span>
+                            <h3 className="text-3xl font-bold text-slate-900 mb-4">Experience Our Service Standards</h3>
+                            <p className="text-lg text-slate-600 mb-6">
+                                See our team in action. From server maintenance to workstation troubleshooting, we adhere to the highest industry standards.
+                            </p>
+                            <div className="space-y-4">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+                                        <Check className="w-5 h-5" />
+                                    </div>
+                                    <span className="font-medium text-slate-700">ISO Certified Processes</span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                                        <Users className="w-5 h-5" />
+                                    </div>
+                                    <span className="font-medium text-slate-700">Expert Technicians Only</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-video group">
+                            {selectedVideo && (
+                                selectedVideo.includes("youtube") ? (
+                                    <iframe
+                                        src={selectedVideo}
+                                        className="w-full h-full object-cover"
+                                        title="Service Standard Video"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                        frameBorder="0"
+                                    ></iframe>
+                                ) : (
+                                    <video
+                                        key={selectedVideo}
+                                        src={selectedVideo}
+                                        controls
+                                        autoPlay
+                                        muted
+                                        loop
+                                        className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+                                    >
+                                        Your browser does not support the video tag.
+                                    </video>
+                                )
+                            )}
+                            {!selectedVideo.includes("youtube") && (
+                                <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/20 to-transparent" />
+                            )}
+                        </div>
+                    </div>
+                </motion.div>
+
                 {/* What's Included Section */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -128,6 +253,8 @@ const Plans = () => {
                         ))}
                     </div>
                 </motion.div>
+
+
 
                 {/* Plans Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">

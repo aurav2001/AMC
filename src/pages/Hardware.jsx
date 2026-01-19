@@ -61,14 +61,10 @@ const processSteps = [
 const Hardware = () => {
     return (
         <div className="bg-slate-50 min-h-screen">
-            {/* Hero Section - Premium Design */}
-            <section className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white py-28 overflow-hidden">
-                {/* Animated Background Elements */}
-                <div className="absolute inset-0">
-                    <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-blue-500/20 rounded-full blur-[120px] animate-pulse" />
-                    <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-cyan-500/20 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '1s' }} />
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary-500/10 rounded-full blur-[150px]" />
-                </div>
+            {/* Hero Section - Professional Design */}
+            <section className="relative bg-slate-900 text-white py-28 overflow-hidden">
+                {/* Background Pattern */}
+                <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
 
                 {/* Grid Pattern Overlay */}
                 <div className="absolute inset-0 opacity-10" style={{
@@ -136,8 +132,7 @@ const Hardware = () => {
                             className="hidden lg:block"
                         >
                             <div className="relative">
-                                {/* Decorative Ring */}
-                                <div className="absolute -inset-4 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-3xl blur-xl opacity-30" />
+                                {/* Decorative Ring Removed for cleaner look */}
                                 <img
                                     src={sf1}
                                     alt="Hardware Maintenance"

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, Check, X, Send, Cpu, Server, Database, Loader2, Monitor, Shield, Clock, Users, Wrench, HardDrive, Wifi, Settings, Phone, Mail } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -53,9 +53,24 @@ const planFeatureDetails = {
     }
 };
 
+// Video playlist for random selection
+const videoList = [
+    "https://www.youtube.com/embed/wklUhIyg2DY?autoplay=1&mute=1&loop=1&playlist=wklUhIyg2DY", // Office Short
+    "https://www.youtube.com/embed/rOkSBf9CPaI?autoplay=1&mute=1&loop=1&playlist=rOkSBf9CPaI", // Laptop Typing Short
+];
+
+
 const PlanDetails = () => {
     const { id } = useParams();
     const [showModal, setShowModal] = useState(false);
+    const [selectedVideo, setSelectedVideo] = useState("");
+
+    // Random video selection on mount
+    useEffect(() => {
+        const random = videoList[Math.floor(Math.random() * videoList.length)];
+        setSelectedVideo(random);
+    }, []);
+
 
     const [formData, setFormData] = useState({
         name: "",
@@ -143,10 +158,24 @@ const PlanDetails = () => {
                     animate={{ opacity: 1, y: 0 }}
                     className={`relative rounded-3xl overflow-hidden bg-gradient-to-br ${plan.gradient} border border-slate-200 shadow-xl mb-12`}
                 >
-                    <div className="absolute inset-0 opacity-10">
-                        <div className="absolute inset-0 bg-[url('/images/banner1212.avif')] bg-cover bg-center" />
+                    <div className="absolute inset-0">
+                        {selectedVideo ? (
+                            <video
+                                key={selectedVideo}
+                                src={selectedVideo}
+                                autoPlay
+                                muted
+                                loop
+                                className="w-full h-full object-cover opacity-30"
+                            >
+                                Your browser does not support the video tag.
+                            </video>
+                        ) : (
+                            <div className="absolute inset-0 bg-[url('/images/banner1212.avif')] bg-cover bg-center opacity-10" />
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-r from-white/90 to-white/60 backdrop-blur-[2px]" />
                     </div>
-                    <div className="relative p-8 md:p-12">
+                    <div className="relative p-8 md:p-12 z-10 form-style">
                         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                             <div className="flex items-center gap-6">
                                 <div className="bg-white p-5 rounded-2xl shadow-lg">
@@ -154,10 +183,10 @@ const PlanDetails = () => {
                                 </div>
                                 <div>
                                     <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-2">{plan.name}</h1>
-                                    <p className="text-xl text-slate-600">{plan.description}</p>
+                                    <p className="text-xl text-slate-600 font-medium">{plan.description}</p>
                                 </div>
                             </div>
-                            <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg">
+                            <div className="bg-white/80 backdrop-blur-md p-6 rounded-2xl shadow-lg border border-white/50">
                                 <p className="text-slate-500 text-sm uppercase tracking-wide font-semibold mb-1">Annual Price</p>
                                 <div className="flex items-baseline">
                                     <span className="text-5xl font-bold text-slate-900">{plan.price}</span>
@@ -172,6 +201,64 @@ const PlanDetails = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
                     {/* Left Column - Plan Details */}
                     <div className="lg:col-span-2 space-y-8">
+                        {/* Random Video Section */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.5 }}
+                            className="bg-white rounded-3xl p-8 shadow-lg border border-slate-100 overflow-hidden"
+                        >
+                            <h2 className="text-2xl font-bold text-slate-900 mb-6">Experience Our Service</h2>
+                            <div className="relative rounded-2xl overflow-hidden shadow-md aspect-video">
+                                {selectedVideo && (
+                                    selectedVideo.includes("youtube") ? (
+                                        <iframe
+                                            src={selectedVideo}
+                                            className="w-full h-full object-cover"
+                                            title="Experience Our Service"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allowFullScreen
+                                            frameBorder="0"
+                                        ></iframe>
+                                    ) : (
+                                        <video
+                                            key={selectedVideo}
+                                            src={selectedVideo}
+                                            controls
+                                            autoPlay
+                                            muted
+                                            loop
+                                            className="w-full h-full object-cover"
+                                        >
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    )
+                                )}
+                                {!selectedVideo.includes("youtube") && (
+                                    <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/20 to-transparent" />
+                                )}
+                            </div>
+                            <p className="text-slate-500 text-sm mt-4 text-center">
+                                * Video demonstration of our maintenance standards. Refresh page to see more.
+                            </p>
+                        </motion.div>
+
+                        {/* Detailed Description */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.4 }}
+                            className="bg-white rounded-3xl p-8 shadow-lg border border-slate-100"
+                        >
+                            <h2 className="text-2xl font-bold text-slate-900 mb-4">Detailed Overview</h2>
+                            <p className="text-slate-600 text-lg leading-relaxed mb-6">{plan.detailedDescription}</p>
+
+                            <div className="bg-primary-50 rounded-2xl p-6 border border-primary-100">
+                                <h3 className="font-bold text-primary-800 mb-2">Best Suited For:</h3>
+                                <p className="text-primary-700">{featureDetails.bestFor}</p>
+                            </div>
+                        </motion.div>
+
                         {/* What's Included */}
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
@@ -239,21 +326,9 @@ const PlanDetails = () => {
                             </div>
                         </motion.div>
 
-                        {/* Detailed Description */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.4 }}
-                            className="bg-white rounded-3xl p-8 shadow-lg border border-slate-100"
-                        >
-                            <h2 className="text-2xl font-bold text-slate-900 mb-4">Detailed Overview</h2>
-                            <p className="text-slate-600 text-lg leading-relaxed mb-6">{plan.detailedDescription}</p>
 
-                            <div className="bg-primary-50 rounded-2xl p-6 border border-primary-100">
-                                <h3 className="font-bold text-primary-800 mb-2">Best Suited For:</h3>
-                                <p className="text-primary-700">{featureDetails.bestFor}</p>
-                            </div>
-                        </motion.div>
+
+
                     </div>
 
                     {/* Right Column - Sidebar */}
