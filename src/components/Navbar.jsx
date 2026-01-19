@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ShieldCheck, ChevronDown, Monitor, Code, Cpu, Server } from 'lucide-react';
+import { Menu, X, ShieldCheck, ChevronDown, Monitor, Code, Cpu, Server, Database } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [servicesOpen, setServicesOpen] = useState(false);
+    const [plansOpen, setPlansOpen] = useState(false);
     const location = useLocation();
     const pathname = location.pathname;
 
@@ -39,14 +40,35 @@ const Navbar = () => {
         },
     ];
 
+    const planLinks = [
+        {
+            name: 'Basic Plan',
+            path: '/plan/basic',
+            icon: <Cpu className="w-5 h-5" />,
+            desc: 'For Home Users'
+        },
+        {
+            name: 'Standard Plan',
+            path: '/plan/standard',
+            icon: <Server className="w-5 h-5" />,
+            desc: 'For Small Business'
+        },
+        {
+            name: 'Premium Plan',
+            path: '/plan/premium',
+            icon: <Database className="w-5 h-5" />,
+            desc: 'For Enterprise'
+        },
+    ];
+
     const isServiceActive = pathname.startsWith('/services');
 
     return (
         <>
             <nav
                 className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-                        ? 'bg-white shadow-lg'
-                        : 'bg-white/95 backdrop-blur-md'
+                    ? 'bg-white shadow-lg'
+                    : 'bg-white/95 backdrop-blur-md'
                     }`}
             >
                 {/* Top Bar */}
@@ -85,8 +107,8 @@ const Navbar = () => {
                                     key={link.name}
                                     to={link.path}
                                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${pathname === link.path
-                                            ? 'text-primary-600 bg-primary-50'
-                                            : 'text-slate-700 hover:text-primary-600 hover:bg-slate-50'
+                                        ? 'text-primary-600 bg-primary-50'
+                                        : 'text-slate-700 hover:text-primary-600 hover:bg-slate-50'
                                         }`}
                                 >
                                     {link.name}
@@ -101,8 +123,8 @@ const Navbar = () => {
                             >
                                 <button
                                     className={`flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isServiceActive
-                                            ? 'text-primary-600 bg-primary-50'
-                                            : 'text-slate-700 hover:text-primary-600 hover:bg-slate-50'
+                                        ? 'text-primary-600 bg-primary-50'
+                                        : 'text-slate-700 hover:text-primary-600 hover:bg-slate-50'
                                         }`}
                                 >
                                     Services
@@ -124,20 +146,20 @@ const Navbar = () => {
                                                         key={service.name}
                                                         to={service.path}
                                                         className={`flex items-start gap-4 p-4 rounded-xl transition-all ${pathname === service.path
-                                                                ? 'bg-primary-50'
-                                                                : 'hover:bg-slate-50'
+                                                            ? 'bg-primary-50'
+                                                            : 'hover:bg-slate-50'
                                                             }`}
                                                     >
                                                         <div className={`p-2.5 rounded-lg ${pathname === service.path
-                                                                ? 'bg-primary-600 text-white'
-                                                                : 'bg-slate-100 text-slate-600'
+                                                            ? 'bg-primary-600 text-white'
+                                                            : 'bg-slate-100 text-slate-600'
                                                             }`}>
                                                             {service.icon}
                                                         </div>
                                                         <div>
                                                             <span className={`font-semibold block ${pathname === service.path
-                                                                    ? 'text-primary-600'
-                                                                    : 'text-slate-800'
+                                                                ? 'text-primary-600'
+                                                                : 'text-slate-800'
                                                                 }`}>
                                                                 {service.name}
                                                             </span>
@@ -160,13 +182,71 @@ const Navbar = () => {
                                 </AnimatePresence>
                             </div>
 
+                            {/* Plans Dropdown */}
+                            <div
+                                className="relative"
+                                onMouseEnter={() => setPlansOpen(true)}
+                                onMouseLeave={() => setPlansOpen(false)}
+                            >
+                                <button
+                                    className={`flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${pathname.startsWith('/plan')
+                                        ? 'text-primary-600 bg-primary-50'
+                                        : 'text-slate-700 hover:text-primary-600 hover:bg-slate-50'
+                                        }`}
+                                >
+                                    Plans
+                                    <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${plansOpen ? 'rotate-180' : ''}`} />
+                                </button>
+
+                                <AnimatePresence>
+                                    {plansOpen && (
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, y: 10 }}
+                                            transition={{ duration: 0.2 }}
+                                            className="absolute top-full left-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden"
+                                        >
+                                            <div className="p-2">
+                                                {planLinks.map((plan) => (
+                                                    <Link
+                                                        key={plan.name}
+                                                        to={plan.path}
+                                                        className={`flex items-start gap-4 p-4 rounded-xl transition-all ${pathname === plan.path
+                                                            ? 'bg-primary-50'
+                                                            : 'hover:bg-slate-50'
+                                                            }`}
+                                                    >
+                                                        <div className={`p-2.5 rounded-lg ${pathname === plan.path
+                                                            ? 'bg-primary-600 text-white'
+                                                            : 'bg-slate-100 text-slate-600'
+                                                            }`}>
+                                                            {plan.icon}
+                                                        </div>
+                                                        <div>
+                                                            <span className={`font-semibold block ${pathname === plan.path
+                                                                ? 'text-primary-600'
+                                                                : 'text-slate-800'
+                                                                }`}>
+                                                                {plan.name}
+                                                            </span>
+                                                            <span className="text-sm text-slate-500">{plan.desc}</span>
+                                                        </div>
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </div>
+
                             {navLinks.slice(1).map((link) => (
                                 <Link
                                     key={link.name}
                                     to={link.path}
                                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${pathname === link.path
-                                            ? 'text-primary-600 bg-primary-50'
-                                            : 'text-slate-700 hover:text-primary-600 hover:bg-slate-50'
+                                        ? 'text-primary-600 bg-primary-50'
+                                        : 'text-slate-700 hover:text-primary-600 hover:bg-slate-50'
                                         }`}
                                 >
                                     {link.name}
@@ -209,8 +289,8 @@ const Navbar = () => {
                                         to={link.path}
                                         onClick={() => setIsOpen(false)}
                                         className={`block px-4 py-3 rounded-xl text-base font-medium transition-colors ${pathname === link.path
-                                                ? 'text-primary-600 bg-primary-50'
-                                                : 'text-slate-700 hover:text-primary-600 hover:bg-slate-50'
+                                            ? 'text-primary-600 bg-primary-50'
+                                            : 'text-slate-700 hover:text-primary-600 hover:bg-slate-50'
                                             }`}
                                     >
                                         {link.name}
@@ -228,12 +308,33 @@ const Navbar = () => {
                                             to={service.path}
                                             onClick={() => setIsOpen(false)}
                                             className={`flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium transition-colors ${pathname === service.path
-                                                    ? 'text-primary-600 bg-primary-50'
-                                                    : 'text-slate-700 hover:text-primary-600 hover:bg-slate-50'
+                                                ? 'text-primary-600 bg-primary-50'
+                                                : 'text-slate-700 hover:text-primary-600 hover:bg-slate-50'
                                                 }`}
                                         >
                                             {service.icon}
                                             {service.name}
+                                        </Link>
+                                    ))}
+                                </div>
+
+                                {/* Mobile Plans */}
+                                <div className="space-y-2">
+                                    <span className="block px-4 py-2 text-sm font-semibold text-slate-500 uppercase tracking-wide">
+                                        Plans
+                                    </span>
+                                    {planLinks.map((plan) => (
+                                        <Link
+                                            key={plan.name}
+                                            to={plan.path}
+                                            onClick={() => setIsOpen(false)}
+                                            className={`flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium transition-colors ${pathname === plan.path
+                                                ? 'text-primary-600 bg-primary-50'
+                                                : 'text-slate-700 hover:text-primary-600 hover:bg-slate-50'
+                                                }`}
+                                        >
+                                            {plan.icon}
+                                            {plan.name}
                                         </Link>
                                     ))}
                                 </div>
@@ -244,8 +345,8 @@ const Navbar = () => {
                                         to={link.path}
                                         onClick={() => setIsOpen(false)}
                                         className={`block px-4 py-3 rounded-xl text-base font-medium transition-colors ${pathname === link.path
-                                                ? 'text-primary-600 bg-primary-50'
-                                                : 'text-slate-700 hover:text-primary-600 hover:bg-slate-50'
+                                            ? 'text-primary-600 bg-primary-50'
+                                            : 'text-slate-700 hover:text-primary-600 hover:bg-slate-50'
                                             }`}
                                     >
                                         {link.name}

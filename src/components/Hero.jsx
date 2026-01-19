@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight, Phone, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import img1 from "../assets/amc12.jpg";
 import img2 from "../assets/amc11.jpg";
-import img3 from "../assets/banner111.png";
+import img3 from "../assets/sf1.jpg";
 
 const banners = [
     {
@@ -25,7 +25,7 @@ const banners = [
         id: 3,
         title: "Network & IT Infrastructure",
         description: "End-to-end network setup, maintenance, and security solutions. Protect your business with our comprehensive IT support.",
-        image: "/images/banner1.png",
+        image: img3,
         cta: "Contact Us"
     },
 ];
