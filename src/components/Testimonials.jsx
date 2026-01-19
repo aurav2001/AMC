@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { Star, Quote } from 'lucide-react';
 
@@ -43,7 +42,7 @@ const Testimonials = () => {
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="text-center max-w-3xl mx-auto mb-16">
-                    <motion.span 
+                    <motion.span
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
@@ -51,7 +50,7 @@ const Testimonials = () => {
                     >
                         Testimonials
                     </motion.span>
-                    <motion.h2 
+                    <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
@@ -60,14 +59,14 @@ const Testimonials = () => {
                     >
                         Trusted by Businesses Like Yours
                     </motion.h2>
-                    <motion.p 
+                    <motion.p
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
                         className="text-lg text-slate-600"
                     >
-                        Don't just take our word for it. Here's what our satisfied clients have to say about our AMC services.
+                        Don&apos;t just take our word for it. Here&apos;s what our satisfied clients have to say about our AMC services.
                     </motion.p>
                 </div>
 
@@ -82,7 +81,7 @@ const Testimonials = () => {
                             className="bg-slate-50 p-8 rounded-2xl shadow-sm border border-slate-100 relative hover:shadow-md transition-shadow"
                         >
                             <Quote className="absolute top-6 right-6 w-10 h-10 text-primary-100" />
-                            
+
                             <div className="flex space-x-1 mb-6 text-yellow-400">
                                 {[...Array(testimonial.rating)].map((_, i) => (
                                     <Star key={i} className="w-5 h-5 fill-current" />
@@ -90,12 +89,12 @@ const Testimonials = () => {
                             </div>
 
                             <p className="text-slate-700 italic mb-6 leading-relaxed">
-                                "{testimonial.content}"
+                                &quot;{testimonial.content}&quot;
                             </p>
 
                             <div className="flex items-center">
-                                <img 
-                                    src={testimonial.image} 
+                                <img
+                                    src={testimonial.image}
                                     alt={testimonial.name}
                                     className="w-12 h-12 rounded-full object-cover mr-4 ring-2 ring-primary-100"
                                 />

@@ -19,3 +19,13 @@
         @apply bg-slate-50 text-slate-900 font-sans antialiased;
     }
 }
+
+/* Hide scrollbar for carousel */
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}

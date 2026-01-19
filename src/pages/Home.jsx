@@ -4,7 +4,7 @@ import Plans from '../components/Plans';
 import WhyUs from '../components/WhyUs';
 import FAQ from '../components/FAQ';
 import { useLocation } from 'react-router-dom';
-
+import BrandsSection from '../components/BrandsSection';
 import Testimonials from '../components/Testimonials';
 
 const Home = () => {
@@ -24,6 +24,7 @@ const Home = () => {
             <Hero />
             <Plans />
             <WhyUs />
+            <BrandsSection />
             <FAQ />
             <Testimonials />
         </div>

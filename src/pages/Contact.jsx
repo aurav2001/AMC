@@ -1,7 +1,27 @@
-import React, { useState, useRef } from 'react';
-
+import { useState, useRef } from 'react';
 import { Mail, Phone, MapPin, Send, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
+
+const contactInfo = [
+    {
+        icon: <Phone className="w-6 h-6 text-primary-600" />,
+        title: "Phone",
+        content: "+91 9810443288",
+        sub: "Mon-Fri from 8am to 5pm"
+    },
+    {
+        icon: <Mail className="w-6 h-6 text-primary-600" />,
+        title: "Email",
+        content: "kkumar@uniotechit.com",
+        sub: "Online support 24/7"
+    },
+    {
+        icon: <MapPin className="w-6 h-6 text-primary-600" />,
+        title: "Office",
+        content: "Noida Sector-63, Haryana (India) Upper Ground Floor Plot No-273, Noida 201306",
+        sub: "Cityville, Noida 201306"
+    }
+];
 
 const Contact = () => {
     const [formData, setFormData] = useState({
@@ -12,27 +32,7 @@ const Contact = () => {
     });
     const [status, setStatus] = useState('idle'); // idle, submitting, success, error
     const [errors, setErrors] = useState({});
-
-    const contactInfo = [
-        {
-            icon: <Phone className="w-6 h-6 text-primary-600" />,
-            title: "Phone",
-            content: "+91 9810443288",
-            sub: "Mon-Fri from 8am to 5pm"
-        },
-        {
-            icon: <Mail className="w-6 h-6 text-primary-600" />,
-            title: "Email",
-            content: "kkumar@uniotechit.com",
-            sub: "Online support 24/7"
-        },
-        {
-            icon: <MapPin className="w-6 h-6 text-primary-600" />,
-            title: "Office",
-            content: "Noida Sector-63, Haryana (India) Upper Ground Floor Plot No-273, Noida 201306",
-            sub: "Cityville, Noida 201306"
-        }
-    ];
+    const form = useRef();
 
     const validate = () => {
         const newErrors = {};
@@ -51,8 +51,6 @@ const Contact = () => {
             setErrors(prev => ({ ...prev, [name]: '' }));
         }
     };
-
-    const form = useRef();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -102,7 +100,7 @@ const Contact = () => {
             >
                 <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">Get in Touch</h1>
                 <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-                    Have questions about our AMC plans? We're here to help you 24/7.
+                    Have questions about our AMC plans? We&apos;re here to help you 24/7.
                 </p>
             </motion.div>
 

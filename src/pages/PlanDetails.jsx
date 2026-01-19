@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Check, X, Send, Cpu, Server, Database, Loader2, Shield, Award, Users, Headphones, Wrench, Settings, Network, MonitorCog } from 'lucide-react';
+import { useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { ArrowLeft, Check, X, Send, Cpu, Server, Database, Loader2, Monitor, Shield, Clock, Users, Wrench, HardDrive, Wifi, Settings, Phone, Mail } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { plans } from '../data/plans';
-import networkConfigImg from '../assets/network_config.png';
-import desktopEngineerImg from '../assets/desktop_engineer.png';
 
 const iconMap = {
     Cpu: <Cpu className="w-16 h-16 text-blue-500" />,
@@ -12,9 +10,51 @@ const iconMap = {
     Database: <Database className="w-16 h-16 text-purple-500" />,
 };
 
+// Plan-specific feature details
+const planFeatureDetails = {
+    basic: {
+        highlights: [
+            { icon: <Monitor className="w-6 h-6" />, title: "Desktop Support", desc: "Complete desktop and laptop maintenance" },
+            { icon: <Shield className="w-6 h-6" />, title: "Antivirus Protection", desc: "Installation & regular updates" },
+            { icon: <Clock className="w-6 h-6" />, title: "Business Hours", desc: "9 AM - 6 PM support coverage" },
+            { icon: <Wrench className="w-6 h-6" />, title: "2 Preventive Visits", desc: "Scheduled maintenance visits yearly" },
+        ],
+        images: [
+            { src: "/images/banner1212.avif", alt: "Desktop Computer Support" },
+            { src: "/images/banner22.png", alt: "Software Installation" },
+        ],
+        bestFor: "Home users, freelancers, and small office setups with 1-5 computers"
+    },
+    standard: {
+        highlights: [
+            { icon: <Server className="w-6 h-6" />, title: "Network Support", desc: "LAN/Wi-Fi setup and troubleshooting" },
+            { icon: <HardDrive className="w-6 h-6" />, title: "Data Backup", desc: "Automated backup configuration" },
+            { icon: <Users className="w-6 h-6" />, title: "Priority Support", desc: "24/7 priority response" },
+            { icon: <Settings className="w-6 h-6" />, title: "4 Preventive Visits", desc: "Quarterly maintenance visits" },
+        ],
+        images: [
+            { src: "/images/banner111.png", alt: "Network Infrastructure" },
+            { src: "/images/banner1212.avif", alt: "Office IT Setup" },
+        ],
+        bestFor: "Small to medium businesses with 5-20 workstations and network requirements"
+    },
+    premium: {
+        highlights: [
+            { icon: <Database className="w-6 h-6" />, title: "Server Management", desc: "Windows/Linux server maintenance" },
+            { icon: <Shield className="w-6 h-6" />, title: "Security Audit", desc: "Firewall and security assessments" },
+            { icon: <Wifi className="w-6 h-6" />, title: "Unlimited Visits", desc: "On-demand support whenever needed" },
+            { icon: <Users className="w-6 h-6" />, title: "Dedicated Manager", desc: "Personal account manager assigned" },
+        ],
+        images: [
+            { src: "/images/banner22.png", alt: "Server Room" },
+            { src: "/images/banner111.png", alt: "Enterprise Security" },
+        ],
+        bestFor: "Enterprises and large organizations requiring comprehensive IT infrastructure management"
+    }
+};
+
 const PlanDetails = () => {
     const { id } = useParams();
-    const navigate = useNavigate();
     const [showModal, setShowModal] = useState(false);
 
     const [formData, setFormData] = useState({
@@ -27,6 +67,7 @@ const PlanDetails = () => {
     const [status, setStatus] = useState("idle");
 
     const plan = plans.find(p => p.id === id);
+    const featureDetails = planFeatureDetails[id] || planFeatureDetails.basic;
 
     if (!plan) {
         return (
@@ -47,10 +88,8 @@ const PlanDetails = () => {
         e.preventDefault();
         setStatus("sending");
 
-        // We combine User Data + Fixed Plan Data
         const object = {
             ...formData,
-            // These values are hardcoded from the selected plan
             plan_name: plan.name,
             plan_price: plan.price,
             plan_period: plan.period,
@@ -90,229 +129,221 @@ const PlanDetails = () => {
     };
 
     return (
-        <div className="min-h-screen pb-20">
-            {/* Hero Banner Section */}
-            <div className={`relative bg-gradient-to-br ${plan.gradient} py-16 px-4 mb-12`}>
-                <div className="max-w-7xl mx-auto">
-                    <Link to="/#plans" className="inline-flex items-center text-primary-600 hover:text-primary-700 mb-6 group font-medium">
-                        <ArrowLeft className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" />
-                        Back to Plans
-                    </Link>
+        <div className="min-h-screen pt-10 pb-20 bg-slate-50">
+            {/* Header Section */}
+            <div className="max-w-7xl mx-auto px-4">
+                <Link to="/#plans" className="inline-flex items-center text-primary-600 hover:text-primary-700 mb-8 group font-medium">
+                    <ArrowLeft className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" />
+                    Back to Plans
+                </Link>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                        {/* Left: Plan Info */}
-                        <div>
-                            <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full mb-4">
-                                {iconMap[plan.iconName] && React.cloneElement(iconMap[plan.iconName], { className: "w-6 h-6" })}
-                                <span className="font-semibold text-slate-700">AMC Service Plan</span>
+                {/* Hero Banner */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className={`relative rounded-3xl overflow-hidden bg-gradient-to-br ${plan.gradient} border border-slate-200 shadow-xl mb-12`}
+                >
+                    <div className="absolute inset-0 opacity-10">
+                        <div className="absolute inset-0 bg-[url('/images/banner1212.avif')] bg-cover bg-center" />
+                    </div>
+                    <div className="relative p-8 md:p-12">
+                        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                            <div className="flex items-center gap-6">
+                                <div className="bg-white p-5 rounded-2xl shadow-lg">
+                                    {iconMap[plan.iconName]}
+                                </div>
+                                <div>
+                                    <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-2">{plan.name}</h1>
+                                    <p className="text-xl text-slate-600">{plan.description}</p>
+                                </div>
                             </div>
-                            <h1 className="text-5xl font-bold text-slate-900 mb-4">{plan.name}</h1>
-                            <p className="text-xl text-slate-600 mb-6">{plan.description}</p>
-                            <div className="flex items-baseline gap-2 mb-6">
-                                <span className="text-5xl font-bold text-slate-900">{plan.price}</span>
-                                <span className="text-lg text-slate-500">{plan.period}</span>
-                            </div>
-                            <button
-                                onClick={() => setShowModal(true)}
-                                className="inline-flex items-center gap-2 px-8 py-4 bg-slate-900 text-white font-semibold rounded-xl hover:bg-primary-600 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-                            >
-                                <Send className="w-5 h-5" />
-                                Get This Plan
-                            </button>
-                        </div>
-
-                        {/* Right: Hero Image */}
-                        <div className="relative flex justify-center lg:justify-end">
-                            <div className="relative">
-                                <div className="absolute -inset-4 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-3xl blur-xl opacity-30"></div>
-                                <img
-                                    src={plan.id === 'standard' ? networkConfigImg : desktopEngineerImg}
-                                    alt={plan.name}
-                                    className="relative rounded-2xl shadow-2xl max-w-md w-full object-cover"
-                                />
+                            <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg">
+                                <p className="text-slate-500 text-sm uppercase tracking-wide font-semibold mb-1">Annual Price</p>
+                                <div className="flex items-baseline">
+                                    <span className="text-5xl font-bold text-slate-900">{plan.price}</span>
+                                    <span className="text-slate-600 font-medium ml-2">{plan.period}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </motion.div>
 
-            {/* Main Content */}
-            <div className="max-w-7xl mx-auto px-4">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                    {/* Left: Plan Details (spans 2 cols) */}
+                {/* Main Content Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+                    {/* Left Column - Plan Details */}
                     <div className="lg:col-span-2 space-y-8">
                         {/* What's Included */}
-                        <div className="bg-white p-8 rounded-3xl shadow-lg border border-slate-100">
-                            <h3 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-3">
-                                <Check className="w-8 h-8 text-green-500" />
-                                What's Included
-                            </h3>
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.1 }}
+                            className="bg-white rounded-3xl p-8 shadow-lg border border-slate-100"
+                        >
+                            <h2 className="text-2xl font-bold text-slate-900 mb-6">What's Included</h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {plan.inclusions.map((item, idx) => (
-                                    <div key={idx} className="flex items-start p-4 bg-green-50 rounded-xl">
-                                        <Check className="w-5 h-5 text-green-600 mr-3 mt-0.5 flex-shrink-0" />
-                                        <span className="font-medium text-slate-700">{item}</span>
+                                    <div key={idx} className="flex items-start gap-3 p-4 bg-slate-50 rounded-xl">
+                                        <div className="bg-green-100 p-1 rounded-lg flex-shrink-0">
+                                            <Check className="w-5 h-5 text-green-600" />
+                                        </div>
+                                        <span className="text-slate-700 font-medium">{item}</span>
                                     </div>
                                 ))}
                             </div>
-                        </div>
+                        </motion.div>
 
-                        {/* Detailed Overview */}
-                        <div className="bg-white p-8 rounded-3xl shadow-lg border border-slate-100">
-                            <h3 className="text-2xl font-bold text-slate-900 mb-4">Detailed Overview</h3>
-                            <p className="text-lg text-slate-600 leading-relaxed">{plan.detailedDescription}</p>
-                        </div>
-
-                        {/* Standard Plan Configuration Section */}
-                        {plan.id === 'standard' && (
-                            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-3xl shadow-lg border border-blue-100">
-                                <h3 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-3">
-                                    <Settings className="w-8 h-8 text-blue-600" />
-                                    Network & Configuration Services
-                                </h3>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div className="flex items-start gap-4">
-                                        <div className="p-3 bg-blue-100 rounded-xl">
-                                            <Network className="w-6 h-6 text-blue-600" />
+                        {/* Key Features */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.2 }}
+                            className="bg-white rounded-3xl p-8 shadow-lg border border-slate-100"
+                        >
+                            <h2 className="text-2xl font-bold text-slate-900 mb-6">Key Features & Benefits</h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {featureDetails.highlights.map((feature, idx) => (
+                                    <div key={idx} className="flex items-start gap-4 p-5 bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl hover:shadow-md transition-shadow">
+                                        <div className="bg-primary-100 p-3 rounded-xl text-primary-600">
+                                            {feature.icon}
                                         </div>
                                         <div>
-                                            <h4 className="font-bold text-slate-800">LAN/WAN Setup</h4>
-                                            <p className="text-sm text-slate-500">Complete local and wide area network configuration</p>
+                                            <h3 className="font-bold text-slate-800 mb-1">{feature.title}</h3>
+                                            <p className="text-slate-600 text-sm">{feature.desc}</p>
                                         </div>
                                     </div>
-                                    <div className="flex items-start gap-4">
-                                        <div className="p-3 bg-indigo-100 rounded-xl">
-                                            <MonitorCog className="w-6 h-6 text-indigo-600" />
-                                        </div>
-                                        <div>
-                                            <h4 className="font-bold text-slate-800">System Optimization</h4>
-                                            <p className="text-sm text-slate-500">Performance tuning and resource optimization</p>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-start gap-4">
-                                        <div className="p-3 bg-purple-100 rounded-xl">
-                                            <Server className="w-6 h-6 text-purple-600" />
-                                        </div>
-                                        <div>
-                                            <h4 className="font-bold text-slate-800">Server Config</h4>
-                                            <p className="text-sm text-slate-500">Windows/Linux server setup and maintenance</p>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-start gap-4">
-                                        <div className="p-3 bg-green-100 rounded-xl">
-                                            <Shield className="w-6 h-6 text-green-600" />
-                                        </div>
-                                        <div>
-                                            <h4 className="font-bold text-slate-800">Security Setup</h4>
-                                            <p className="text-sm text-slate-500">Firewall and security protocol configuration</p>
-                                        </div>
-                                    </div>
-                                </div>
+                                ))}
                             </div>
-                        )}
+                        </motion.div>
+
+                        {/* AMC Service Images */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.3 }}
+                            className="bg-white rounded-3xl p-8 shadow-lg border border-slate-100"
+                        >
+                            <h2 className="text-2xl font-bold text-slate-900 mb-6">Our AMC Services</h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {featureDetails.images.map((img, idx) => (
+                                    <div key={idx} className="relative group overflow-hidden rounded-2xl">
+                                        <img
+                                            src={img.src}
+                                            alt={img.alt}
+                                            className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-110"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent flex items-end p-6">
+                                            <span className="text-white font-semibold text-lg">{img.alt}</span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </motion.div>
+
+                        {/* Detailed Description */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.4 }}
+                            className="bg-white rounded-3xl p-8 shadow-lg border border-slate-100"
+                        >
+                            <h2 className="text-2xl font-bold text-slate-900 mb-4">Detailed Overview</h2>
+                            <p className="text-slate-600 text-lg leading-relaxed mb-6">{plan.detailedDescription}</p>
+
+                            <div className="bg-primary-50 rounded-2xl p-6 border border-primary-100">
+                                <h3 className="font-bold text-primary-800 mb-2">Best Suited For:</h3>
+                                <p className="text-primary-700">{featureDetails.bestFor}</p>
+                            </div>
+                        </motion.div>
                     </div>
 
-                    {/* Right: Quick CTA Card */}
-                    <div className="lg:sticky lg:top-24 h-fit">
-                        <div className="bg-white p-8 rounded-3xl shadow-2xl border border-slate-100 text-center">
-                            <div className="bg-slate-100 p-4 rounded-2xl inline-block mb-4">
-                                {iconMap[plan.iconName]}
+                    {/* Right Column - Sidebar */}
+                    <div className="space-y-6">
+                        {/* Quick Features */}
+                        <motion.div
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.2 }}
+                            className="bg-white rounded-3xl p-6 shadow-lg border border-slate-100"
+                        >
+                            <h3 className="font-bold text-slate-800 mb-4">Plan Highlights</h3>
+                            <ul className="space-y-3">
+                                {plan.features.map((feature, idx) => (
+                                    <li key={idx} className="flex items-center gap-3 text-slate-700">
+                                        <Check className="w-5 h-5 text-green-500 flex-shrink-0" />
+                                        <span>{feature}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </motion.div>
+
+                        {/* Support Info */}
+                        <motion.div
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.3 }}
+                            className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl p-6 text-white"
+                        >
+                            <h3 className="font-bold mb-4">Need Help Choosing?</h3>
+                            <p className="text-slate-300 text-sm mb-4">Our experts are here to help you select the perfect plan for your business needs.</p>
+                            <div className="space-y-3">
+                                <a href="tel:+919810443288" className="flex items-center gap-3 text-slate-200 hover:text-white transition-colors">
+                                    <Phone className="w-5 h-5" />
+                                    <span>+91 9810443288</span>
+                                </a>
+                                <a href="mailto:kkumar@uniotechit.com" className="flex items-center gap-3 text-slate-200 hover:text-white transition-colors">
+                                    <Mail className="w-5 h-5" />
+                                    <span>kkumar@uniotechit.com</span>
+                                </a>
                             </div>
-                            <h3 className="text-2xl font-bold text-slate-900 mb-2">{plan.name}</h3>
-                            <div className="flex items-baseline justify-center gap-1 mb-4">
-                                <span className="text-3xl font-bold text-slate-900">{plan.price}</span>
-                                <span className="text-slate-500">{plan.period}</span>
-                            </div>
-                            <p className="text-slate-600 mb-6">
-                                Ready to get started? Send us your enquiry!
-                            </p>
+                        </motion.div>
+
+                        {/* Compare Plans CTA */}
+                        <motion.div
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.4 }}
+                            className="bg-slate-100 rounded-3xl p-6"
+                        >
+                            <h3 className="font-bold text-slate-800 mb-2">Compare All Plans</h3>
+                            <p className="text-slate-600 text-sm mb-4">View all plans side by side to find the best fit.</p>
+                            <Link
+                                to="/#plans"
+                                className="block w-full py-3 text-center bg-white rounded-xl font-semibold text-slate-800 hover:bg-slate-50 transition-colors border border-slate-200"
+                            >
+                                View All Plans
+                            </Link>
+                        </motion.div>
+                    </div>
+                </div>
+
+                {/* Enquiry Section - Bottom */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                    className="bg-gradient-to-r from-primary-600 to-primary-700 rounded-3xl p-8 md:p-12 text-white shadow-2xl"
+                >
+                    <div className="max-w-3xl mx-auto text-center">
+                        <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Get Started?</h2>
+                        <p className="text-xl text-primary-100 mb-8">
+                            Send us an enquiry for the <span className="font-bold text-white">{plan.name}</span> and our team will get back to you within 24 hours.
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
                             <button
                                 onClick={() => setShowModal(true)}
-                                className="w-full bg-slate-900 text-white py-4 rounded-xl font-bold text-lg hover:bg-primary-600 transition-all shadow-lg hover:shadow-primary-500/30 transform hover:-translate-y-1"
+                                className="px-10 py-4 bg-white text-primary-600 rounded-2xl font-bold text-lg hover:bg-primary-50 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                             >
-                                Send Enquiry
+                                Send Enquiry Now
                             </button>
+                            <a
+                                href="tel:+919810443288"
+                                className="px-10 py-4 bg-primary-500 text-white rounded-2xl font-bold text-lg hover:bg-primary-400 transition-all border-2 border-white/20"
+                            >
+                                Call Us: +91 9810443288
+                            </a>
                         </div>
                     </div>
-                </div>
-
-                {/* Enquiry Section at Bottom */}
-                <div className="mt-16 bg-gradient-to-r from-slate-50 to-blue-50 rounded-3xl p-8 md:p-12 shadow-lg">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-                        {/* Left Side - Info Cards */}
-                        <div className="space-y-6">
-                            <h3 className="text-3xl font-bold text-slate-900 mb-6">
-                                Why Choose <span className="text-blue-600">Us?</span>
-                            </h3>
-                            <p className="text-slate-600 mb-8">
-                                We are a trusted team of desktop engineers committed to keeping your systems running smoothly. With years of experience and dedication, we provide top-notch IT support.
-                            </p>
-
-                            {/* Info Cards Grid */}
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div className="bg-white rounded-xl p-5 shadow-md hover:shadow-lg transition-shadow border-l-4 border-blue-500">
-                                    <div className="flex items-center gap-3 mb-2">
-                                        <Award className="w-8 h-8 text-blue-500" />
-                                        <h4 className="font-bold text-slate-800">10+ Years</h4>
-                                    </div>
-                                    <p className="text-sm text-slate-500">Industry Experience</p>
-                                </div>
-
-                                <div className="bg-white rounded-xl p-5 shadow-md hover:shadow-lg transition-shadow border-l-4 border-green-500">
-                                    <div className="flex items-center gap-3 mb-2">
-                                        <Users className="w-8 h-8 text-green-500" />
-                                        <h4 className="font-bold text-slate-800">500+ Clients</h4>
-                                    </div>
-                                    <p className="text-sm text-slate-500">Trusted Partners</p>
-                                </div>
-
-                                <div className="bg-white rounded-xl p-5 shadow-md hover:shadow-lg transition-shadow border-l-4 border-purple-500">
-                                    <div className="flex items-center gap-3 mb-2">
-                                        <Headphones className="w-8 h-8 text-purple-500" />
-                                        <h4 className="font-bold text-slate-800">24/7 Support</h4>
-                                    </div>
-                                    <p className="text-sm text-slate-500">Always Available</p>
-                                </div>
-
-                                <div className="bg-white rounded-xl p-5 shadow-md hover:shadow-lg transition-shadow border-l-4 border-orange-500">
-                                    <div className="flex items-center gap-3 mb-2">
-                                        <Wrench className="w-8 h-8 text-orange-500" />
-                                        <h4 className="font-bold text-slate-800">Expert Team</h4>
-                                    </div>
-                                    <p className="text-sm text-slate-500">Certified Engineers</p>
-                                </div>
-                            </div>
-
-                            {/* CTA Button */}
-                            <div className="pt-4">
-                                <button
-                                    onClick={() => setShowModal(true)}
-                                    className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl"
-                                >
-                                    <Headphones className="w-5 h-5" />
-                                    Get Expert Consultation
-                                </button>
-                            </div>
-                        </div>
-
-                        {/* Right Side - Desktop Engineer Image */}
-                        <div className="relative flex justify-center lg:justify-end">
-                            <div className="relative">
-                                <div className="absolute -inset-4 bg-gradient-to-r from-blue-400 to-purple-400 rounded-3xl blur-xl opacity-30"></div>
-                                <img
-                                    src={desktopEngineerImg}
-                                    alt="Desktop Engineer"
-                                    className="relative rounded-2xl shadow-2xl max-w-md w-full object-cover hover:scale-105 transition-transform duration-300"
-                                />
-                                {/* Floating Badge */}
-                                <div className="absolute -bottom-4 -left-4 bg-white px-6 py-3 rounded-xl shadow-lg flex items-center gap-2">
-                                    <Shield className="w-6 h-6 text-green-500" />
-                                    <span className="font-bold text-slate-800">100% Reliable</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </motion.div>
             </div>
 
             {/* Enquiry Modal */}
@@ -343,7 +374,6 @@ const PlanDetails = () => {
                                 </button>
                             </div>
 
-                            {/* Scrollable Content Area */}
                             <div className="overflow-y-auto">
                                 {status === "success" ? (
                                     <div className="p-12 flex flex-col items-center text-center">
@@ -358,12 +388,9 @@ const PlanDetails = () => {
                                     </div>
                                 ) : (
                                     <form onSubmit={handleSubmit} className="p-8 space-y-5">
-
-                                        {/* --- FIXED PLAN DETAILS SECTION --- */}
                                         <div className="grid grid-cols-2 gap-4">
                                             <div className="space-y-1">
                                                 <label className="text-sm font-semibold text-slate-700">Selected Plan</label>
-                                                {/* ReadOnly Input for Plan Name */}
                                                 <input
                                                     type="text"
                                                     value={plan.name}
@@ -373,7 +400,6 @@ const PlanDetails = () => {
                                             </div>
                                             <div className="space-y-1">
                                                 <label className="text-sm font-semibold text-slate-700">Amount</label>
-                                                {/* ReadOnly Input for Price */}
                                                 <input
                                                     type="text"
                                                     value={plan.price}
@@ -382,7 +408,6 @@ const PlanDetails = () => {
                                                 />
                                             </div>
                                         </div>
-                                        {/* ---------------------------------- */}
 
                                         <div className="space-y-1">
                                             <label className="text-sm font-semibold text-slate-700">Full Name</label>

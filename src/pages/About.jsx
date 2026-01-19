@@ -1,9 +1,4 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Award, Users, Clock, ThumbsUp, CheckCircle } from 'lucide-react';
-import Image from '../assets/about1.webp';
-import Image2 from '../assets/banner22.png';
-import Image3 from '../assets/AMC1.jpg';
+import { Award, Users, Clock, CheckCircle } from 'lucide-react';
 
 const stats = [
     { label: 'Happy Clients', value: '100+', icon: <Users className="w-6 h-6 text-primary-500" /> },
@@ -20,9 +15,9 @@ const values = [
 ];
 
 const team = [
-    { name: 'Mukesh Ambani', role: 'CEO & Founder', image: Image3 },
-    { name: 'Adani', role: 'Chief Technology Officer', image: Image2 },
-    { name: 'Narayan', role: 'Lead Service Engineer', image: Image3 },
+    { name: 'Mukesh Ambani', role: 'CEO & Founder', image: '/images/AMC1.jpg' },
+    { name: 'Adani', role: 'Chief Technology Officer', image: '/images/banner22.png' },
+    { name: 'Narayan', role: 'Lead Service Engineer', image: '/images/AMC1.jpg' },
 ];
 
 const About = () => {
@@ -32,21 +27,12 @@ const About = () => {
             <div className="relative bg-slate-900 text-white py-32 mt-4 overflow-hidden rounded-3xl mx-4">
                 <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center" />
                 <div className="max-w-7xl mx-auto px-4 relative z-10 text-center">
-                    <motion.h1
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="text-5xl md:text-6xl font-bold mb-6"
-                    >
+                    <h1 className="text-5xl md:text-6xl font-bold mb-6">
                         Empowering Business Through Technology
-                    </motion.h1>
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
-                        className="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed"
-                    >
+                    </h1>
+                    <p className="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
                         Since 2025, AMC Pro has been the trusted partner for over 100+ businesses, ensuring their IT infrastructure is robust, secure, and efficient.
-                    </motion.p>
+                    </p>
                 </div>
             </div>
 
@@ -54,12 +40,8 @@ const About = () => {
             <div className="max-w-7xl mx-auto px-4 -mt-16 relative z-20 pt-20">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
                     {stats.map((stat, idx) => (
-                        <motion.div
+                        <div
                             key={idx}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: idx * 0.1 }}
                             className="bg-white p-6 rounded-2xl shadow-lg border border-slate-100 text-center"
                         >
                             <div className="bg-primary-50 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -67,7 +49,7 @@ const About = () => {
                             </div>
                             <h3 className="text-3xl font-bold text-slate-900 mb-1">{stat.value}</h3>
                             <p className="text-slate-500 font-medium text-sm">{stat.label}</p>
-                        </motion.div>
+                        </div>
                     ))}
                 </div>
             </div>
@@ -80,7 +62,7 @@ const About = () => {
                         <p className="text-lg text-slate-600 leading-relaxed mb-8">
                             We believe that technology should be an enabler, not a bottleneck. Our mission is to provide proactive, reliable, and expert maintenance services that allow our clients to focus on what they do best—growing their business.
                             <br /><br />
-                            We don't just fix computers; we optimize workflows, secure data, and future-proof your infrastructure.
+                            We don&apos;t just fix computers; we optimize workflows, secure data, and future-proof your infrastructure.
                         </p>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             {values.map((val, idx) => (
@@ -99,7 +81,7 @@ const About = () => {
                     <div className="relative">
                         <div className="absolute inset-0 bg-primary-600 rounded-3xl rotate-3 opacity-10 transform translate-x-4 translate-y-4"></div>
                         <img
-                            src={Image}
+                            src="/images/about1.webp"
                             alt="Team Collaboration"
                             className="relative rounded-3xl shadow-2xl w-full object-cover h-[500px]"
                         />
@@ -113,20 +95,20 @@ const About = () => {
                     <h2 className="text-3xl font-bold text-slate-900 mb-12">Meet Our Leadership</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {team.map((member, idx) => (
-                            <motion.div
+                            <div
                                 key={idx}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: idx * 0.2 }}
                                 className="group relative overflow-hidden rounded-2xl"
                             >
-                                <img src={member.image} alt={member.name} className="w-full h-60 object-cover transition-transform duration-500 group-hover:scale-110" />
+                                <img
+                                    src={member.image}
+                                    alt={member.name}
+                                    className="w-full h-60 object-cover transition-transform duration-500 group-hover:scale-110"
+                                />
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 to-transparent flex flex-col justify-end p-6">
                                     <h3 className="text-xl font-bold text-white">{member.name}</h3>
                                     <p className="text-primary-400">{member.role}</p>
                                 </div>
-                            </motion.div>
+                            </div>
                         ))}
                     </div>
                 </div>
