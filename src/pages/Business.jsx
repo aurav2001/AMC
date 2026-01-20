@@ -17,14 +17,14 @@ import { useContent } from '../context/ContentContext';
 
 
 
-const Software = () => {
+const Business = () => {
     const { content } = useContent();
 
     // Get data from context with fallbacks
-    const services = content.software?.services || [];
-    const softwareList = content.software?.softwareList || [];
-    const stats = content.software?.stats || [];
-    const hero = content.software?.hero || {};
+    const services = content.business?.services || [];
+    const softwareList = content.business?.softwareList || [];
+    const stats = content.business?.stats || [];
+    const hero = content.business?.hero || {};
 
     return (
         <div className="bg-slate-50 min-h-screen">
@@ -44,14 +44,14 @@ const Software = () => {
                         >
                             <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-500/20 to-fuchsia-500/20 rounded-full text-fuchsia-300 text-sm font-medium mb-6 border border-fuchsia-500/30">
                                 <Code className="w-4 h-4" />
-                                Software Support Services
+                                Business IT Services
                                 <span className="bg-gradient-to-r from-purple-500 to-fuchsia-500 text-white text-xs px-2 py-0.5 rounded-full ml-2">Expert</span>
                             </div>
                             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-                                {hero.title || 'Complete Software Solutions'}
+                                {hero.title || 'Complete Business IT Solutions'}
                             </h1>
                             <p className="text-xl text-slate-300 mb-8 leading-relaxed">
-                                {hero.subtitle || 'From operating systems to enterprise applications, we provide comprehensive software installation, configuration, and ongoing support for your business.'}
+                                {hero.subtitle || 'From IT consulting to infrastructure management, we provide comprehensive business technology solutions tailored to your organization.'}
                             </p>
 
                             {/* Trust Badges */}
@@ -172,10 +172,10 @@ const Software = () => {
                             Our Services
                         </span>
                         <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
-                            Software <span className="text-purple-600">Solutions</span>
+                            Business <span className="text-purple-600">Solutions</span>
                         </h2>
                         <p className="text-xl text-slate-600">
-                            Expert software support tailored to your business requirements
+                            Expert business IT solutions tailored to your organization
                         </p>
                     </motion.div>
 
@@ -212,7 +212,6 @@ const Software = () => {
                     </div>
                 </div>
             </section>
-
 
 
             {/* Service Navigation Buttons */}
@@ -276,10 +275,10 @@ const Software = () => {
                                 Supported Software
                             </span>
                             <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
-                                Software We <span className="text-purple-600">Support</span>
+                                Services We <span className="text-purple-600">Provide</span>
                             </h2>
                             <p className="text-lg text-slate-600 mb-10">
-                                We provide expert support for a wide range of business and enterprise software solutions.
+                                We provide expert business IT solutions and consulting services for organizations of all sizes.
                             </p>
                             <div className="grid grid-cols-2 gap-4">
                                 {softwareList.map((software, idx) => (
@@ -325,15 +324,15 @@ const Software = () => {
 
             {/* Why Choose Us Section */}
             <WhyUs data={{
-                badge: content.software?.whyChooseUs?.badge,
-                title: content.software?.whyChooseUs?.heading,
-                subtitle: content.software?.whyChooseUs?.subtitle,
-                reasons: content.software?.whyChooseUs?.reasons,
+                badge: content.business?.whyChooseUs?.badge,
+                title: content.business?.whyChooseUs?.heading,
+                subtitle: content.business?.whyChooseUs?.subtitle,
+                reasons: content.business?.whyChooseUs?.reasons,
                 rightCard: {
-                    title: content.software?.whyChooseUs?.ctaHeading,
-                    description: content.software?.whyChooseUs?.ctaDescription,
-                    features: content.software?.whyChooseUs?.features,
-                    phone: content.software?.hero?.phone
+                    title: content.business?.whyChooseUs?.ctaHeading,
+                    description: content.business?.whyChooseUs?.ctaDescription,
+                    features: content.business?.whyChooseUs?.features,
+                    phone: content.business?.hero?.phone
                 },
                 stats: [] // Using main stats bar instead
             }} />
@@ -342,7 +341,7 @@ const Software = () => {
             <ServicePricingCards
                 title="Our Service Plans"
                 subtitle="Transparent pricing for all your software support needs"
-                cards={content.software?.pricingCards}
+                cards={content.business?.pricingCards}
             />
 
             {/* Brands We Support */}
@@ -368,10 +367,10 @@ const Software = () => {
                                 Get Started Today
                             </span>
                             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                                Need Software Assistance?
+                                Need Business IT Assistance?
                             </h2>
                             <p className="text-xl text-purple-100 mb-10 max-w-2xl mx-auto">
-                                Get expert help with installation, configuration, or troubleshooting today.
+                                Get expert help with IT consulting, infrastructure, or business technology solutions today.
                             </p>
                             <div className="flex flex-wrap justify-center gap-4">
                                 <Link
@@ -396,4 +395,4 @@ const Software = () => {
     );
 };
 
-export default Software;
+export default Business;

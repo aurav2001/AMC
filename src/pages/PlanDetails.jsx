@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, Check, X, Send, Cpu, Server, Database, Loader2, Monitor, Shield, Clock, Users, Wrench, HardDrive, Wifi, Settings, Phone, Mail, Award, Briefcase } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { plans } from '../data/plans';
+import { useContent } from '../context/ContentContext';
+import amc12 from "../assets/amc12.jpg";
 
 const iconMap = {
     Cpu: <Cpu className="w-16 h-16 text-blue-500" />,
@@ -20,7 +21,7 @@ const planFeatureDetails = {
             { icon: <Wrench className="w-6 h-6" />, title: "2 Preventive Visits", desc: "Scheduled maintenance visits yearly" },
         ],
         images: [
-            { src: "https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=800&q=80", alt: "Desktop Computer Support" },
+            { src: amc12, alt: "Desktop Computer Support" },
             { src: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80", alt: "Software Installation" },
             { src: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=800&q=80", alt: "Hardware Maintenance" },
             { src: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&q=80", alt: "System Diagnostics" },
@@ -69,6 +70,7 @@ const videoList = [
 
 const PlanDetails = () => {
     const { id } = useParams();
+    const { content } = useContent();
     const [showModal, setShowModal] = useState(false);
     const [selectedVideo, setSelectedVideo] = useState("");
 
@@ -88,7 +90,7 @@ const PlanDetails = () => {
 
     const [status, setStatus] = useState("idle");
 
-    const plan = plans.find(p => p.id === id);
+    const plan = content.plans?.[id];
     const featureDetails = planFeatureDetails[id] || planFeatureDetails.basic;
 
     if (!plan) {
@@ -306,7 +308,7 @@ const PlanDetails = () => {
                         >
                             <h2 className="text-3xl font-bold text-slate-900 mb-8">What's Included</h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                {plan.inclusions.map((item, idx) => (
+                                {(plan.inclusions || []).map((item, idx) => (
                                     <div key={idx} className="flex items-start gap-4 p-5 bg-slate-50 rounded-xl hover:bg-slate-100 transition-colors">
                                         <div className="bg-green-100 p-2 rounded-lg flex-shrink-0">
                                             <Check className="w-6 h-6 text-green-600" strokeWidth={2.5} />
@@ -382,7 +384,7 @@ const PlanDetails = () => {
                     >
                         <h3 className="text-3xl font-bold text-slate-900 mb-8">Plan Highlights</h3>
                         <ul className="space-y-5">
-                            {plan.features.map((feature, idx) => (
+                            {(plan.features || []).map((feature, idx) => (
                                 <li key={idx} className="flex items-center gap-4 text-slate-700 text-lg">
                                     <Check className="w-7 h-7 text-green-500 flex-shrink-0" strokeWidth={2.5} />
                                     <span>{feature}</span>

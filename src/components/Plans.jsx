@@ -2,14 +2,12 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Check, Cpu, Server, Database, Star, ArrowRight, FileCheck, Shield, Clock, Headphones, Wrench, Users, Zap } from 'lucide-react';
-import { plans } from '../data/plans';
+import { useContent } from '../context/ContentContext';
 import amcImage from '../assets/amcs1.webp';
 
-const iconMap = {
-    Cpu: <Cpu className="w-8 h-8" />,
-    Server: <Server className="w-8 h-8" />,
-    Database: <Database className="w-8 h-8" />,
-};
+import DynamicIcon from './DynamicIcon';
+import ServicePricingCards from './ServicePricingCards';
+
 
 const gradientColors = {
     basic: {
@@ -76,12 +74,24 @@ const videoList = [
 ];
 
 const Plans = () => {
+    const { content } = useContent();
+    const plansInfo = content.home?.plansSection || {};
     const [selectedVideo, setSelectedVideo] = useState("");
 
+    // Convert plans object to array with stable keys
+    const plansArray = Object.entries(content.plans || {}).map(([key, plan]) => ({
+        ...plan,
+        id: plan.id || key // Ensure id exists, fallback to key
+    }));
+
     useEffect(() => {
-        const random = videoList[Math.floor(Math.random() * videoList.length)];
-        setSelectedVideo(random);
-    }, []);
+        if (plansInfo.videoUrl) {
+            setSelectedVideo(plansInfo.videoUrl);
+        } else {
+            const random = videoList[Math.floor(Math.random() * videoList.length)];
+            setSelectedVideo(random);
+        }
+    }, [plansInfo.videoUrl]);
 
 
     return (
@@ -102,7 +112,7 @@ const Plans = () => {
                         className="inline-flex items-center gap-2 px-4 py-2 bg-primary-100 text-primary-700 rounded-full text-sm font-semibold mb-4"
                     >
                         <FileCheck className="w-4 h-4" />
-                        AMC Plans
+                        {plansInfo.badge || "AMC Plans"}
                     </motion.span>
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
@@ -111,7 +121,7 @@ const Plans = () => {
                         transition={{ delay: 0.1 }}
                         className="text-4xl md:text-5xl font-bold text-slate-900 mb-4"
                     >
-                        Choose Your Perfect <span className="text-primary-600">Plan</span>
+                        {plansInfo.title || "Choose Your Perfect Plan"}
                     </motion.h2>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
@@ -120,8 +130,7 @@ const Plans = () => {
                         transition={{ delay: 0.2 }}
                         className="text-xl text-slate-600 max-w-3xl mx-auto"
                     >
-                        Our Annual Maintenance Contracts (AMC) provide complete IT support to keep your business running smoothly.
-                        Choose from flexible plans designed for homes, small businesses, and enterprises.
+                        {plansInfo.subtitle || "Our Annual Maintenance Contracts (AMC) provide complete IT support to keep your business running smoothly. Choose from flexible plans designed for homes, small businesses, and enterprises."}
                     </motion.p>
                 </div>
 
@@ -134,7 +143,7 @@ const Plans = () => {
                 >
                     <div className="relative rounded-3xl overflow-hidden shadow-xl group h-full max-h-[400px]">
                         <img
-                            src={amcImage}
+                            src={plansInfo.overviewImage || amcImage}
                             alt="AMC Services"
                             className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                         />
@@ -144,10 +153,9 @@ const Plans = () => {
                         <span className="inline-block px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-xs font-bold uppercase tracking-wide mb-4">
                             Premium Maintenance
                         </span>
-                        <h3 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">Why Choose Our AMC?</h3>
+                        <h3 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">{plansInfo.overviewTitle || "Why You Need an AMC"}</h3>
                         <p className="text-lg text-slate-600 leading-relaxed mb-6">
-                            We offer comprehensive annual maintenance contracts designed to keep your IT infrastructure running at peak performance.
-                            Our plans are tailored to ensure zero downtime, data security, and extended hardware life for businesses of all sizes.
+                            {plansInfo.overviewDesc || "In today's digital age, downtime is not an option. Our AMC services ensure your IT infrastructure is always up and running."}
                         </p>
                         <ul className="space-y-4">
                             {[
@@ -178,11 +186,11 @@ const Plans = () => {
                         <div>
                             <span className="inline-flex items-center gap-2 px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-semibold mb-4">
                                 <Zap className="w-4 h-4" />
-                                Live Demo
+                                {plansInfo.mainFeatureTitle || "Live Demo"}
                             </span>
-                            <h3 className="text-3xl font-bold text-slate-900 mb-4">Experience Our Service Standards</h3>
+                            <h3 className="text-3xl font-bold text-slate-900 mb-4">{plansInfo.videoTitle || "Experience Our Service Standards"}</h3>
                             <p className="text-lg text-slate-600 mb-6">
-                                See our team in action. From server maintenance to workstation troubleshooting, we adhere to the highest industry standards.
+                                {plansInfo.videoSubtitle || "See our team in action. From server maintenance to workstation troubleshooting, we adhere to the highest industry standards."}
                             </p>
                             <div className="space-y-4">
                                 <div className="flex items-center gap-3">
@@ -231,6 +239,22 @@ const Plans = () => {
                     </div>
                 </motion.div>
 
+                {/* Software Pricing Plans */}
+                <ServicePricingCards
+                    title="Software Support Plans"
+                    subtitle="Transparent pricing for all your software support needs"
+                    cards={content.software?.pricingCards}
+                    linkTo="/software"
+                />
+
+                {/* Hardware Pricing Plans */}
+                <ServicePricingCards
+                    title="Our Plans"
+                    subtitle="Comprehensive maintenance packages for your hardware infrastructure"
+                    cards={content.hardware?.pricingCards}
+                    linkTo="/hardware"
+                />
+
                 {/* What's Included Section */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -258,7 +282,7 @@ const Plans = () => {
 
                 {/* Plans Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-                    {plans.map((plan, idx) => {
+                    {plansArray.map((plan, idx) => {
                         const colors = gradientColors[plan.id] || gradientColors.basic;
                         const isPopular = colors.popular;
 
@@ -294,7 +318,7 @@ const Plans = () => {
                                             <p className="text-slate-500 text-sm">{plan.description}</p>
                                         </div>
                                         <div className={`p-3 rounded-2xl ${colors.icon} group-hover:scale-110 transition-transform shadow-sm`}>
-                                            {iconMap[plan.iconName]}
+                                            <DynamicIcon name={plan.iconName} className="w-8 h-8" />
                                         </div>
                                     </div>
 
@@ -309,7 +333,7 @@ const Plans = () => {
 
                                     {/* Features */}
                                     <ul className="space-y-4 mb-8">
-                                        {plan.features.map((feature, i) => (
+                                        {(plan.features || []).map((feature, i) => (
                                             <li key={i} className="flex items-start gap-3">
                                                 <div className="mt-0.5">
                                                     <Check className="w-5 h-5 text-green-500" />

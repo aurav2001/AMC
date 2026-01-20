@@ -1,24 +1,11 @@
 import { motion } from 'framer-motion';
+import { useContent } from '../context/ContentContext';
 
-const brands = [
-    { name: 'Dell', category: 'hardware' },
-    { name: 'HP', category: 'hardware' },
-    { name: 'Lenovo', category: 'hardware' },
-    { name: 'ASUS', category: 'hardware' },
-    { name: 'Acer', category: 'hardware' },
-    { name: 'Apple', category: 'hardware' },
-    { name: 'Microsoft', category: 'software' },
-    { name: 'Cisco', category: 'network' },
-    { name: 'Netgear', category: 'network' },
-    { name: 'TP-Link', category: 'network' },
-    { name: 'Epson', category: 'printer' },
-    { name: 'Canon', category: 'printer' },
-    { name: 'Brother', category: 'printer' },
-    { name: 'Samsung', category: 'hardware' },
-    { name: 'LG', category: 'hardware' },
-];
+const BrandsSection = () => {
+    const { content } = useContent();
+    const brandsData = content.home?.brands || { list: [] };
+    const { title = "Brands We Support", subtitle = "Expert service for all major hardware brands.", list = [] } = brandsData;
 
-const BrandsSection = ({ title = "Brands We Support", subtitle = "Expert service for all major hardware brands." }) => {
     return (
         <section className="py-16 bg-gradient-to-b from-slate-50 to-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -51,7 +38,7 @@ const BrandsSection = ({ title = "Brands We Support", subtitle = "Expert service
                     transition={{ delay: 0.2 }}
                     className="flex flex-wrap justify-center gap-3 md:gap-4"
                 >
-                    {brands.map((brand, idx) => (
+                    {list.map((brand, idx) => (
                         <motion.div
                             key={idx}
                             initial={{ opacity: 0, scale: 0.9 }}

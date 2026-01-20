@@ -2,37 +2,34 @@ import { useRef, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Phone, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import img1 from "../assets/amc12.jpg";
-import img2 from "../assets/amc11.jpg";
-import img3 from "../assets/sf1.jpg";
+import { useContent } from '../context/ContentContext';
 
-const banners = [
-    {
-        id: 1,
-        title: "Computer & Laptop AMC Services",
-        description: "Complete annual maintenance for desktops, laptops, and workstations. Keep your systems running at peak performance with our expert support.",
-        image: img1,
-        cta: "Get Free Quote"
-    },
-    {
-        id: 2,
-        title: "Software Support & Solutions",
-        description: "Professional software installation, updates, troubleshooting, and maintenance. We handle everything from OS to enterprise applications.",
-        image: img2,
-        cta: "Explore Plans"
-    },
-    {
-        id: 3,
-        title: "Network & IT Infrastructure",
-        description: "End-to-end network setup, maintenance, and security solutions. Protect your business with our comprehensive IT support.",
-        image: img3,
-        cta: "Contact Us"
-    },
-];
+// Import hero images at the top
+import amc12 from '../assets/amc12.jpg';
+
+// Image mapping - map paths to actual imports
+const imageMap = {
+    "/src/assets/amc12.jpg": amc12,
+};
 
 const Hero = () => {
+    const { content } = useContent();
     const [activeIndex, setActiveIndex] = useState(0);
     const [isPaused, setIsPaused] = useState(false);
+
+    // Get banners and stats from content context
+    const banners = (content.home?.hero?.slides || []).map(slide => {
+        // If image is already base64 or external URL, use it directly
+        if (slide.image.startsWith('data:image') || slide.image.startsWith('http')) {
+            return slide;
+        }
+        // Otherwise, map the path to imported image
+        return {
+            ...slide,
+            image: imageMap[slide.image] || slide.image
+        };
+    });
+    const stats = content.home?.hero?.stats || [];
 
     const nextSlide = () => {
         setActiveIndex((prev) => (prev + 1) % banners.length);
@@ -42,24 +39,30 @@ const Hero = () => {
         setActiveIndex((prev) => (prev - 1 + banners.length) % banners.length);
     };
 
-    // Auto-scroll
+    // Auto-scroll - only if multiple slides
     useEffect(() => {
-        if (isPaused) return;
+        if (isPaused || banners.length <= 1) return;
         const intervalId = setInterval(nextSlide, 5000);
         return () => clearInterval(intervalId);
-    }, [isPaused, activeIndex]);
+    }, [isPaused, activeIndex, banners.length]);
 
-    // Keyboard navigation
+    // Keyboard navigation - only if multiple slides
     useEffect(() => {
+        if (banners.length <= 1) return;
         const handleKeyDown = (e) => {
             if (e.key === 'ArrowRight') nextSlide();
             if (e.key === 'ArrowLeft') prevSlide();
         };
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, []);
+    }, [banners.length]);
 
     const currentBanner = banners[activeIndex];
+
+    // Safety check - return null if no banner data
+    if (!currentBanner) {
+        return null;
+    }
 
     return (
         <section
@@ -159,18 +162,12 @@ const Hero = () => {
                                     transition={{ delay: 0.6 }}
                                     className="flex items-center gap-8 pt-8 border-t border-white/10"
                                 >
-                                    <div className="text-center">
-                                        <div className="text-3xl font-bold text-white">100+</div>
-                                        <div className="text-sm text-slate-400">Happy Clients</div>
-                                    </div>
-                                    <div className="text-center">
-                                        <div className="text-3xl font-bold text-white">5+</div>
-                                        <div className="text-sm text-slate-400">Years Experience</div>
-                                    </div>
-                                    <div className="text-center">
-                                        <div className="text-3xl font-bold text-white">24/7</div>
-                                        <div className="text-sm text-slate-400">Support</div>
-                                    </div>
+                                    {stats.map((stat, idx) => (
+                                        <div key={idx} className="text-center">
+                                            <div className="text-3xl font-bold text-white">{stat.value}</div>
+                                            <div className="text-sm text-slate-400">{stat.label}</div>
+                                        </div>
+                                    ))}
                                 </motion.div>
                             </motion.div>
                         </AnimatePresence>
@@ -178,36 +175,40 @@ const Hero = () => {
                 </div>
             </div>
 
-            {/* Navigation Arrows */}
-            <button
-                onClick={prevSlide}
-                className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 p-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full text-white transition-all z-20 border border-white/10"
-                aria-label="Previous slide"
-            >
-                <ChevronLeft className="w-6 h-6" />
-            </button>
-            <button
-                onClick={nextSlide}
-                className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 p-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full text-white transition-all z-20 border border-white/10"
-                aria-label="Next slide"
-            >
-                <ChevronRight className="w-6 h-6" />
-            </button>
-
-            {/* Slide Indicators */}
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
-                {banners.map((_, idx) => (
+            {/* Navigation Arrows - Only show if multiple slides */}
+            {banners.length > 1 && (
+                <>
                     <button
-                        key={idx}
-                        onClick={() => setActiveIndex(idx)}
-                        aria-label={`Go to slide ${idx + 1}`}
-                        className={`h-2 rounded-full transition-all duration-300 ${activeIndex === idx
-                                ? 'w-10 bg-primary-500'
-                                : 'w-2 bg-white/40 hover:bg-white/60'
-                            }`}
-                    />
-                ))}
-            </div>
+                        onClick={prevSlide}
+                        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 p-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full text-white transition-all z-20 border border-white/10"
+                        aria-label="Previous slide"
+                    >
+                        <ChevronLeft className="w-6 h-6" />
+                    </button>
+                    <button
+                        onClick={nextSlide}
+                        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 p-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full text-white transition-all z-20 border border-white/10"
+                        aria-label="Next slide"
+                    >
+                        <ChevronRight className="w-6 h-6" />
+                    </button>
+
+                    {/* Slide Indicators */}
+                    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
+                        {banners.map((_, idx) => (
+                            <button
+                                key={idx}
+                                onClick={() => setActiveIndex(idx)}
+                                aria-label={`Go to slide ${idx + 1}`}
+                                className={`h-2 rounded-full transition-all duration-300 ${activeIndex === idx
+                                    ? 'w-10 bg-primary-500'
+                                    : 'w-2 bg-white/40 hover:bg-white/60'
+                                    }`}
+                            />
+                        ))}
+                    </div>
+                </>
+            )}
         </section>
     );
 };

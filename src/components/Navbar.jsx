@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ShieldCheck, ChevronDown, Monitor, Code, Cpu, Server, Database } from 'lucide-react';
+import { Menu, X, ShieldCheck, ChevronDown, Monitor, Code, Briefcase, Printer, Network, Camera, Cpu, Server, Database } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
@@ -37,6 +37,30 @@ const Navbar = () => {
             path: '/services/software',
             icon: <Code className="w-5 h-5" />,
             desc: 'Software solutions & support'
+        },
+        {
+            name: 'Business',
+            path: '/services/business',
+            icon: <Briefcase className="w-5 h-5" />,
+            desc: 'Business IT solutions'
+        },
+        {
+            name: 'Printer',
+            path: '/services/printer',
+            icon: <Printer className="w-5 h-5" />,
+            desc: 'Printer maintenance & support'
+        },
+        {
+            name: 'Networking',
+            path: '/services/networking',
+            icon: <Network className="w-5 h-5" />,
+            desc: 'Network setup & management'
+        },
+        {
+            name: 'CCTV',
+            path: '/services/cctv',
+            icon: <Camera className="w-5 h-5" />,
+            desc: 'CCTV installation & monitoring'
         },
     ];
 

@@ -1,28 +1,14 @@
 import { useState } from 'react';
 import { Plus, Minus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-
-const faqs = [
-    {
-        question: "What is included in the Annual Maintenance Contract?",
-        answer: "Our AMC covers regular preventive maintenance visits, unlimited breakdown calls, hardware troubleshooting, and software support. Specific inclusions depend on the plan chosen."
-    },
-    {
-        question: "How quickly do you respond to service calls?",
-        answer: "We guarantee a response time of within 2-4 hours for critical issues. For standard queries, we typically resolve them within the same business day."
-    },
-    {
-        question: "Do you provide replacement parts?",
-        answer: "In our Premium Plan, replacement of certain parts is included. For other plans, parts are charged at actuals, but we provide procurement assistance."
-    },
-    {
-        question: "Can I upgrade my plan later?",
-        answer: "Yes, you can upgrade your plan at any time. The cost will be adjusted on a pro-rata basis for the remaining period of your contract."
-    },
-];
+import { useContent } from '../context/ContentContext';
 
 const FAQ = () => {
+    const { content } = useContent();
     const [activeIndex, setActiveIndex] = useState(null);
+
+    const faqData = content.home?.faq || { questions: [] };
+    const { title = "Frequently Asked Questions", subtitle = "Got questions? We've got answers.", questions = [] } = faqData;
 
     const toggleFAQ = (index) => {
         setActiveIndex(activeIndex === index ? null : index);
@@ -32,12 +18,12 @@ const FAQ = () => {
         <section id="faq" className="py-20 bg-white">
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-16">
-                    <h2 className="text-4xl font-bold text-slate-900 mb-4">Frequently Asked Questions</h2>
-                    <p className="text-xl text-slate-600">Got questions? We've got answers.</p>
+                    <h2 className="text-4xl font-bold text-slate-900 mb-4">{title}</h2>
+                    <p className="text-xl text-slate-600">{subtitle}</p>
                 </div>
 
                 <div className="space-y-4">
-                    {faqs.map((faq, idx) => (
+                    {questions.map((faq, idx) => (
                         <div key={idx} className="border border-slate-200 rounded-2xl overflow-hidden bg-slate-50 hover:bg-white transition-colors">
                             <button
                                 onClick={() => toggleFAQ(idx)}

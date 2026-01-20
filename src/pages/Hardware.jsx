@@ -1,64 +1,27 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import DynamicIcon from '../components/DynamicIcon';
 import {
-    Monitor, Laptop, Server, HardDrive, Cpu, Wrench,
-    CheckCircle, ArrowRight, Phone, Shield, Clock,
-    Users, Zap, Settings, RefreshCw, Star, Award, Sparkles
+    Monitor, Laptop, Wrench, CheckCircle, ArrowRight, Sparkles, Phone, Star, Award, Users, Clock, Cpu, RefreshCw,
+    Home, Briefcase, Printer, Network, Camera
 } from 'lucide-react';
+
 import WhyUs from '../components/WhyUs';
 import BrandsSection from '../components/BrandsSection';
-import sf1 from '../assets/sf1.jpg';
-
-const services = [
-    {
-        icon: <Monitor className="w-10 h-10" />,
-        title: "Desktop Computer AMC",
-        description: "Complete maintenance for desktop PCs including hardware diagnostics, cleaning, and performance optimization.",
-        features: ["Hardware diagnostics", "Dust cleaning", "Component upgrades", "Performance tuning"],
-        gradient: "from-blue-500 to-cyan-500",
-        iconBg: "bg-blue-500"
-    },
-    {
-        icon: <Laptop className="w-10 h-10" />,
-        title: "Laptop Maintenance",
-        description: "Professional laptop care including battery health, thermal management, and screen calibration.",
-        features: ["Battery optimization", "Thermal paste replacement", "Keyboard cleaning", "Screen care"],
-        gradient: "from-purple-500 to-pink-500",
-        iconBg: "bg-purple-500"
-    },
-    {
-        icon: <Server className="w-10 h-10" />,
-        title: "Server Maintenance",
-        description: "Enterprise-grade server support including RAID management, backup systems, and uptime monitoring.",
-        features: ["RAID configuration", "Backup management", "24/7 monitoring", "Disaster recovery"],
-        gradient: "from-emerald-500 to-teal-500",
-        iconBg: "bg-emerald-500"
-    },
-    {
-        icon: <HardDrive className="w-10 h-10" />,
-        title: "Storage Solutions",
-        description: "Complete storage device management including HDD/SSD health monitoring and data recovery.",
-        features: ["SSD optimization", "Data migration", "Health monitoring", "Recovery services"],
-        gradient: "from-orange-500 to-red-500",
-        iconBg: "bg-orange-500"
-    },
-];
-
-const benefits = [
-    { icon: <Shield className="w-7 h-7" />, title: "Extended Lifespan", desc: "Regular maintenance extends hardware life by 40%", stat: "40%" },
-    { icon: <Zap className="w-7 h-7" />, title: "Peak Performance", desc: "Keep your systems running at optimal speed", stat: "99%" },
-    { icon: <Clock className="w-7 h-7" />, title: "Minimize Downtime", desc: "Proactive maintenance prevents costly failures", stat: "2hrs" },
-    { icon: <Users className="w-7 h-7" />, title: "Expert Support", desc: "Certified technicians at your service", stat: "10+" },
-];
-
-const processSteps = [
-    { step: "01", title: "Assessment", desc: "Complete hardware audit and health check", icon: <Settings className="w-6 h-6" /> },
-    { step: "02", title: "Planning", desc: "Custom maintenance schedule creation", icon: <Cpu className="w-6 h-6" /> },
-    { step: "03", title: "Execution", desc: "Regular preventive maintenance visits", icon: <Wrench className="w-6 h-6" /> },
-    { step: "04", title: "Reporting", desc: "Detailed reports and recommendations", icon: <RefreshCw className="w-6 h-6" /> },
-];
+import ServicePricingCards from '../components/ServicePricingCards';
+import { useContent } from '../context/ContentContext';
+const sf1 = "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=1200&q=80";
 
 const Hardware = () => {
+    const { content } = useContent();
+
+    // Get data from context with fallbacks
+    const services = content.hardware?.services || [];
+    const benefits = content.hardware?.benefits || [];
+    const processSteps = content.hardware?.processSteps || [];
+    const stats = content.hardware?.stats || [];
+    const hero = content.hardware?.hero || {};
+
     return (
         <div className="bg-slate-50 min-h-screen">
             {/* Hero Section - Professional Design */}
@@ -85,10 +48,10 @@ const Hardware = () => {
                                 <span className="bg-cyan-500 text-white text-xs px-2 py-0.5 rounded-full ml-2">Premium</span>
                             </div>
                             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-                                Desktop & Laptop <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Maintenance</span>
+                                {hero.title || 'Desktop & Laptop Maintenance'}
                             </h1>
                             <p className="text-xl text-slate-300 mb-8 leading-relaxed">
-                                Keep your computers running at peak performance with our comprehensive hardware AMC services. From desktops to enterprise servers, we've got you covered.
+                                {hero.subtitle || 'Keep your computers running at peak performance with our comprehensive hardware AMC services.'}
                             </p>
 
                             {/* Trust Badges */}
@@ -120,7 +83,7 @@ const Hardware = () => {
                                     className="inline-flex items-center gap-2 px-8 py-4 bg-white/10 text-white rounded-2xl font-semibold hover:bg-white/20 transition-all border border-white/20 backdrop-blur-sm"
                                 >
                                     <Phone className="w-5 h-5" />
-                                    Call Now
+                                    {hero.phone || '+91 9810443288'}
                                 </a>
                             </div>
                         </motion.div>
@@ -208,7 +171,7 @@ const Hardware = () => {
 
                                 <div className="relative flex items-start gap-6">
                                     <div className={`${service.iconBg} text-white p-5 rounded-2xl shadow-lg group-hover:scale-110 transition-transform duration-500`}>
-                                        {service.icon}
+                                        <DynamicIcon name={service.icon} className="w-8 h-8" />
                                     </div>
                                     <div className="flex-1">
                                         <h3 className="text-2xl font-bold text-slate-900 mb-3">{service.title}</h3>
@@ -232,62 +195,72 @@ const Hardware = () => {
             </section>
 
             {/* Why Choose Us Section */}
-            <WhyUs />
+            {/* Why Choose Us Section */}
+            <WhyUs data={{
+                badge: content.hardware?.whyChooseUs?.badge,
+                title: content.hardware?.whyChooseUs?.heading,
+                subtitle: content.hardware?.whyChooseUs?.subtitle,
+                reasons: content.hardware?.whyChooseUs?.reasons,
+                rightCard: {
+                    title: content.hardware?.whyChooseUs?.ctaHeading,
+                    description: content.hardware?.whyChooseUs?.ctaDescription,
+                    features: content.hardware?.whyChooseUs?.features,
+                    phone: content.hardware?.hero?.phone
+                },
+                stats: []
+            }} />
 
-            {/* Benefits Section - Gradient Cards */}
-            <section className="py-24 bg-gradient-to-br from-slate-50 to-blue-50 relative overflow-hidden">
+            {/* Service Pricing Cards */}
+            <ServicePricingCards
+                title="Hardware AMC Packages"
+                subtitle="Choose the best plan for your hardware maintenance"
+                cards={content.hardware?.pricingCards}
+            />
+
+
+            {/* Service Navigation Buttons */}
+            <section className="py-[25px] bg-gradient-to-br from-slate-50 to-blue-50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                        <motion.div
-                            initial={{ opacity: 0, x: -30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
+                    <div className="flex flex-wrap justify-center gap-3">
+                        <Link
+                            to="/"
+                            className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
                         >
-                            <span className="inline-flex items-center gap-2 px-4 py-2 bg-primary-100 text-primary-700 rounded-full text-sm font-semibold mb-6">
-                                <Award className="w-4 h-4" />
-                                Why Choose Us
-                            </span>
-                            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
-                                Benefits of Our <span className="text-primary-600">Hardware AMC</span>
-                            </h2>
-                            <p className="text-lg text-slate-600 mb-10">
-                                Protect your investment and maximize productivity with our expert hardware maintenance services.
-                            </p>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                {benefits.map((benefit, idx) => (
-                                    <motion.div
-                                        key={idx}
-                                        initial={{ opacity: 0, y: 20 }}
-                                        whileInView={{ opacity: 1, y: 0 }}
-                                        viewport={{ once: true }}
-                                        transition={{ delay: idx * 0.1 }}
-                                        className="bg-white rounded-2xl p-6 shadow-lg border border-slate-100 hover:shadow-xl transition-all group"
-                                    >
-                                        <div className="flex items-center justify-between mb-4">
-                                            <div className="bg-gradient-to-br from-primary-500 to-blue-600 text-white p-3 rounded-xl shadow-lg group-hover:scale-110 transition-transform">
-                                                {benefit.icon}
-                                            </div>
-                                            <span className="text-2xl font-bold text-primary-600">{benefit.stat}</span>
-                                        </div>
-                                        <h4 className="font-bold text-slate-900 text-lg mb-1">{benefit.title}</h4>
-                                        <p className="text-sm text-slate-600">{benefit.desc}</p>
-                                    </motion.div>
-                                ))}
-                            </div>
-                        </motion.div>
-                        <motion.div
-                            initial={{ opacity: 0, x: 30 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            className="relative"
+                            <Home className="w-5 h-5 text-orange-600" />
+                            <span className="font-medium text-slate-700">Home</span>
+                        </Link>
+
+                        <Link
+                            to="/services/business"
+                            className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
                         >
-                            <div className="absolute -inset-4 bg-gradient-to-r from-primary-500 to-blue-500 rounded-3xl blur-2xl opacity-20" />
-                            <img
-                                src={sf1}
-                                alt="Hardware Benefits"
-                                className="relative rounded-3xl shadow-2xl"
-                            />
-                        </motion.div>
+                            <Briefcase className="w-5 h-5 text-orange-600" />
+                            <span className="font-medium text-orange-600">Business</span>
+                        </Link>
+
+                        <Link
+                            to="/services/printer"
+                            className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
+                        >
+                            <Printer className="w-5 h-5 text-slate-600" />
+                            <span className="font-medium text-slate-700">Printer</span>
+                        </Link>
+
+                        <Link
+                            to="/services/networking"
+                            className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
+                        >
+                            <Network className="w-5 h-5 text-cyan-600" />
+                            <span className="font-medium text-slate-700">Networking</span>
+                        </Link>
+
+                        <Link
+                            to="/services/cctv"
+                            className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
+                        >
+                            <Camera className="w-5 h-5 text-cyan-600" />
+                            <span className="font-medium text-cyan-600">CCTV</span>
+                        </Link>
                     </div>
                 </div>
             </section>
@@ -333,7 +306,7 @@ const Hardware = () => {
                                 )}
 
                                 <div className="bg-gradient-to-br from-cyan-500 to-blue-500 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-cyan-500/30 group-hover:scale-110 transition-transform">
-                                    {step.icon}
+                                    <DynamicIcon name={step.icon} className="w-10 h-10 text-white" />
                                 </div>
                                 <div className="text-5xl font-bold text-cyan-500/30 mb-2">{step.step}</div>
                                 <h3 className="text-xl font-bold mb-2">{step.title}</h3>

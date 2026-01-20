@@ -17,14 +17,14 @@ import { useContent } from '../context/ContentContext';
 
 
 
-const Software = () => {
+const Networking = () => {
     const { content } = useContent();
 
     // Get data from context with fallbacks
-    const services = content.software?.services || [];
-    const softwareList = content.software?.softwareList || [];
-    const stats = content.software?.stats || [];
-    const hero = content.software?.hero || {};
+    const services = content.networking?.services || [];
+    const softwareList = content.networking?.softwareList || [];
+    const stats = content.networking?.stats || [];
+    const hero = content.networking?.hero || {};
 
     return (
         <div className="bg-slate-50 min-h-screen">
@@ -44,14 +44,14 @@ const Software = () => {
                         >
                             <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-500/20 to-fuchsia-500/20 rounded-full text-fuchsia-300 text-sm font-medium mb-6 border border-fuchsia-500/30">
                                 <Code className="w-4 h-4" />
-                                Software Support Services
+                                Networking Services
                                 <span className="bg-gradient-to-r from-purple-500 to-fuchsia-500 text-white text-xs px-2 py-0.5 rounded-full ml-2">Expert</span>
                             </div>
                             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-                                {hero.title || 'Complete Software Solutions'}
+                                {hero.title || 'Complete Networking Solutions'}
                             </h1>
                             <p className="text-xl text-slate-300 mb-8 leading-relaxed">
-                                {hero.subtitle || 'From operating systems to enterprise applications, we provide comprehensive software installation, configuration, and ongoing support for your business.'}
+                                {hero.subtitle || 'From network setup to security and monitoring, we provide comprehensive networking solutions for your business infrastructure.'}
                             </p>
 
                             {/* Trust Badges */}
@@ -215,6 +215,7 @@ const Software = () => {
 
 
 
+
             {/* Service Navigation Buttons */}
             <section className="py-[25px] bg-gradient-to-br from-slate-50 to-blue-50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -325,15 +326,15 @@ const Software = () => {
 
             {/* Why Choose Us Section */}
             <WhyUs data={{
-                badge: content.software?.whyChooseUs?.badge,
-                title: content.software?.whyChooseUs?.heading,
-                subtitle: content.software?.whyChooseUs?.subtitle,
-                reasons: content.software?.whyChooseUs?.reasons,
+                badge: content.networking?.whyChooseUs?.badge,
+                title: content.networking?.whyChooseUs?.heading,
+                subtitle: content.networking?.whyChooseUs?.subtitle,
+                reasons: content.networking?.whyChooseUs?.reasons,
                 rightCard: {
-                    title: content.software?.whyChooseUs?.ctaHeading,
-                    description: content.software?.whyChooseUs?.ctaDescription,
-                    features: content.software?.whyChooseUs?.features,
-                    phone: content.software?.hero?.phone
+                    title: content.networking?.whyChooseUs?.ctaHeading,
+                    description: content.networking?.whyChooseUs?.ctaDescription,
+                    features: content.networking?.whyChooseUs?.features,
+                    phone: content.networking?.hero?.phone
                 },
                 stats: [] // Using main stats bar instead
             }} />
@@ -342,7 +343,7 @@ const Software = () => {
             <ServicePricingCards
                 title="Our Service Plans"
                 subtitle="Transparent pricing for all your software support needs"
-                cards={content.software?.pricingCards}
+                cards={content.networking?.pricingCards}
             />
 
             {/* Brands We Support */}
@@ -396,4 +397,4 @@ const Software = () => {
     );
 };
 
-export default Software;
+export default Networking;
