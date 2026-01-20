@@ -362,7 +362,42 @@ const initialContent = {
         ],
         services: [],
         softwareList: [],
-        pricingCards: [],
+        pricingCards: [
+            {
+                title: "Business IT Support - Basic",
+                price: "5000",
+                originalPrice: "6000",
+                image: "/images/business-basic.png",
+                color: "blue",
+                category: "Business IT Support",
+                features: [
+                    "IT Consultation Services",
+                    "Network Setup & Configuration",
+                    "Email & Cloud Setup",
+                    "4 Preventive Maintenance Visits",
+                    "Remote Support Available",
+                    "Business Hours Support"
+                ],
+                buttonText: "Read More"
+            },
+            {
+                title: "Business IT Support - Premium",
+                price: "10000",
+                originalPrice: "12000",
+                image: "/images/business-premium.png",
+                color: "purple",
+                category: "Premium Business IT Support",
+                features: [
+                    "All Basic Features Included",
+                    "Server Management & Monitoring",
+                    "Data Backup & Recovery",
+                    "Unlimited Onsite Visits",
+                    "24/7 Priority Support",
+                    "Dedicated Account Manager"
+                ],
+                buttonText: "Read More"
+            }
+        ],
         whyChooseUs: {}
     },
     printer: {
@@ -379,7 +414,42 @@ const initialContent = {
         ],
         services: [],
         softwareList: [],
-        pricingCards: [],
+        pricingCards: [
+            {
+                title: "Printer AMC - Basic",
+                price: "2500",
+                originalPrice: "3000",
+                image: "/images/printer-basic.png",
+                color: "orange",
+                category: "Printer Maintenance",
+                features: [
+                    "Quarterly Maintenance Visits",
+                    "Cleaning & Calibration",
+                    "Driver Updates",
+                    "Remote Support",
+                    "Parts at Additional Cost",
+                    "Business Hours Support"
+                ],
+                buttonText: "Read More"
+            },
+            {
+                title: "Printer AMC - Premium",
+                price: "5000",
+                originalPrice: "6000",
+                image: "/images/printer-premium.png",
+                color: "pink",
+                category: "Premium Printer Support",
+                features: [
+                    "Monthly Maintenance Visits",
+                    "Priority Breakdown Support",
+                    "Consumables Included",
+                    "Unlimited Service Calls",
+                    "24/7 Support Available",
+                    "Replacement Printer on Failure"
+                ],
+                buttonText: "Read More"
+            }
+        ],
         whyChooseUs: {}
     },
     networking: {
@@ -396,7 +466,42 @@ const initialContent = {
         ],
         services: [],
         softwareList: [],
-        pricingCards: [],
+        pricingCards: [
+            {
+                title: "Network AMC - Basic",
+                price: "4000",
+                originalPrice: "5000",
+                image: "/images/network-basic.png",
+                color: "cyan",
+                category: "Network Maintenance",
+                features: [
+                    "Router & Switch Configuration",
+                    "Wi-Fi Optimization",
+                    "Quarterly Network Audits",
+                    "Remote Monitoring",
+                    "Security Updates",
+                    "Business Hours Support"
+                ],
+                buttonText: "Read More"
+            },
+            {
+                title: "Network AMC - Enterprise",
+                price: "8000",
+                originalPrice: "10000",
+                image: "/images/network-enterprise.png",
+                color: "blue",
+                category: "Enterprise Network Support",
+                features: [
+                    "All Basic Features Included",
+                    "Firewall Management",
+                    "24/7 Network Monitoring",
+                    "Unlimited Service Calls",
+                    "VPN Setup & Management",
+                    "Dedicated Network Engineer"
+                ],
+                buttonText: "Read More"
+            }
+        ],
         whyChooseUs: {}
     },
     cctv: {
@@ -413,7 +518,42 @@ const initialContent = {
         ],
         services: [],
         softwareList: [],
-        pricingCards: [],
+        pricingCards: [
+            {
+                title: "CCTV AMC - Basic",
+                price: "3000",
+                originalPrice: "4000",
+                image: "/images/cctv-basic.png",
+                color: "green",
+                category: "CCTV Maintenance",
+                features: [
+                    "Quarterly Maintenance Visits",
+                    "Camera Cleaning & Alignment",
+                    "DVR/NVR Health Check",
+                    "Remote Viewing Setup",
+                    "Storage Management",
+                    "Business Hours Support"
+                ],
+                buttonText: "Read More"
+            },
+            {
+                title: "CCTV AMC - Premium",
+                price: "6000",
+                originalPrice: "7500",
+                image: "/images/cctv-premium.png",
+                color: "purple",
+                category: "Premium CCTV Support",
+                features: [
+                    "Monthly Maintenance Visits",
+                    "24/7 Monitoring Support",
+                    "Unlimited Service Calls",
+                    "Cloud Backup Integration",
+                    "Priority Breakdown Support",
+                    "Replacement Camera on Failure"
+                ],
+                buttonText: "Read More"
+            }
+        ],
         whyChooseUs: {}
     },
     hardware: {

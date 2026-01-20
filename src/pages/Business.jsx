@@ -5,7 +5,7 @@ import {
     Code, Settings, RefreshCw, Shield,
     CheckCircle, ArrowRight, Phone, Zap,
     Users, Terminal, Layout, Star, Sparkles, Layers,
-    Home, Briefcase, Printer, Network, Camera
+    Home, Briefcase, Printer as PrinterIcon, Network, Camera, Cpu, Code2
 } from 'lucide-react';
 
 import amcsImg from "../assets/amcs1.webp";
@@ -155,7 +155,7 @@ const Business = () => {
             </section>
 
             {/* Services Grid - Premium Cards */}
-            <section className="py-24 relative overflow-hidden">
+            <section className="py-1 relative overflow-hidden">
                 {/* Background Decorations */}
                 <div className="absolute top-40 right-0 w-96 h-96 bg-purple-100 rounded-full blur-3xl opacity-50" />
                 <div className="absolute bottom-20 left-0 w-80 h-80 bg-fuchsia-100 rounded-full blur-3xl opacity-50" />
@@ -167,7 +167,7 @@ const Business = () => {
                         viewport={{ once: true }}
                         className="text-center max-w-3xl mx-auto mb-16"
                     >
-                        <span className="inline-flex items-center gap-2 px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-semibold mb-4">
+                        <span className="inline-flex items-center gap-2 px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-semibold mb-0">
                             <Code className="w-4 h-4" />
                             Our Services
                         </span>
@@ -235,10 +235,26 @@ const Business = () => {
                         </Link>
 
                         <Link
+                            to="/services/hardware"
+                            className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
+                        >
+                            <Cpu className="w-5 h-5 text-blue-600" />
+                            <span className="font-medium text-slate-700">Hardware</span>
+                        </Link>
+
+                        <Link
+                            to="/services/software"
+                            className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
+                        >
+                            <Code2 className="w-5 h-5 text-purple-600" />
+                            <span className="font-medium text-slate-700">Software</span>
+                        </Link>
+
+                        <Link
                             to="/services/printer"
                             className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
                         >
-                            <Printer className="w-5 h-5 text-slate-600" />
+                            <PrinterIcon className="w-5 h-5 text-slate-600" />
                             <span className="font-medium text-slate-700">Printer</span>
                         </Link>
 
@@ -260,6 +276,13 @@ const Business = () => {
                     </div>
                 </div>
             </section>
+
+            {/* Service Plans Section */}
+            <ServicePricingCards
+                title="Our Service Plans"
+                subtitle="Transparent pricing for all your software support needs"
+                cards={content.business?.pricingCards}
+            />
 
             {/* Supported Software - Enhanced */}
             <section className="py-24 bg-white relative overflow-hidden">

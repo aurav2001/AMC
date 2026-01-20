@@ -3,8 +3,9 @@ import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import {
     LayoutDashboard, Home, CreditCard, Code, Cpu,
     Settings, LogOut, Save, RotateCcw, Download, Upload,
-    Menu, X
+    Menu, X, Building2, Printer, Network, Camera
 } from 'lucide-react';
+
 import { useContent } from '../../context/ContentContext';
 
 const AdminLayout = () => {
@@ -20,6 +21,10 @@ const AdminLayout = () => {
         { path: '/admin/plans', icon: CreditCard, label: 'Plans & Pricing' },
         { path: '/admin/software', icon: Code, label: 'Software Page' },
         { path: '/admin/hardware', icon: Cpu, label: 'Hardware Page' },
+        { path: '/admin/business', icon: Building2, label: 'Business Page' },
+        { path: '/admin/printer', icon: Printer, label: 'Printer Page' },
+        { path: '/admin/networking', icon: Network, label: 'Networking Page' },
+        { path: '/admin/cctv', icon: Camera, label: 'CCTV Page' },
         { path: '/admin/settings', icon: Settings, label: 'Settings' },
     ];
 

@@ -19,6 +19,10 @@ import PlansEditor from './pages/admin/PlansEditor';
 import SettingsEditor from './pages/admin/SettingsEditor';
 import SoftwareEditor from './pages/admin/SoftwareEditor';
 import HardwareEditor from './pages/admin/HardwareEditor';
+import BusinessEditor from './pages/admin/BusinessEditor';
+import PrinterEditor from './pages/admin/PrinterEditor';
+import NetworkingEditor from './pages/admin/NetworkingEditor';
+import CCTVEditor from './pages/admin/CCTVEditor';
 import ProtectedRoute from './components/ProtectedRoute';
 import KeyboardShortcuts from './components/KeyboardShortcuts';
 
@@ -56,6 +60,10 @@ function App() {
           <Route path="plans" element={<PlansEditor />} />
           <Route path="software" element={<SoftwareEditor />} />
           <Route path="hardware" element={<HardwareEditor />} />
+          <Route path="business" element={<BusinessEditor />} />
+          <Route path="printer" element={<PrinterEditor />} />
+          <Route path="networking" element={<NetworkingEditor />} />
+          <Route path="cctv" element={<CCTVEditor />} />
           <Route path="settings" element={<SettingsEditor />} />
         </Route>
 

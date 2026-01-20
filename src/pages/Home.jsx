@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useContent } from '../context/ContentContext';
 import { Link } from 'react-router-dom';
-import { Home as HomeIcon, Briefcase, Printer, Network, Camera } from 'lucide-react';
+import { Home as HomeIcon, Briefcase, Printer, Network, Camera, Cpu, Code2 } from 'lucide-react';
 import Hero from '../components/Hero';
 import WhyUs from '../components/WhyUs';
 import FAQ from '../components/FAQ';
@@ -29,7 +29,7 @@ const Home = () => {
             {/* Service Navigation Buttons */}
             <section className="py-[25px] bg-gradient-to-br from-slate-50 to-blue-50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex flex-wrap justify-center gap-3">
+                    <div className="flex flex-wrap justify-center gap-2">
                         <Link
                             to="/"
                             className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
@@ -44,6 +44,22 @@ const Home = () => {
                         >
                             <Briefcase className="w-5 h-5 text-orange-600" />
                             <span className="font-medium text-orange-600">Business</span>
+                        </Link>
+
+                        <Link
+                            to="/services/hardware"
+                            className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
+                        >
+                            <Cpu className="w-5 h-5 text-blue-600" />
+                            <span className="font-medium text-slate-700">Hardware</span>
+                        </Link>
+
+                        <Link
+                            to="/services/software"
+                            className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
+                        >
+                            <Code2 className="w-5 h-5 text-purple-600" />
+                            <span className="font-medium text-slate-700">Software</span>
                         </Link>
 
                         <Link

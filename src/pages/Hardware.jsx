@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import DynamicIcon from '../components/DynamicIcon';
 import {
     Monitor, Laptop, Wrench, CheckCircle, ArrowRight, Sparkles, Phone, Star, Award, Users, Clock, Cpu, RefreshCw,
-    Home, Briefcase, Printer, Network, Camera
+    Home, Briefcase, Printer, Network, Camera, Code2
 } from 'lucide-react';
 
 import WhyUs from '../components/WhyUs';
@@ -221,7 +221,7 @@ const Hardware = () => {
             {/* Service Navigation Buttons */}
             <section className="py-[25px] bg-gradient-to-br from-slate-50 to-blue-50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex flex-wrap justify-center gap-3">
+                    <div className="flex flex-wrap justify-center gap-2">
                         <Link
                             to="/"
                             className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
@@ -236,6 +236,22 @@ const Hardware = () => {
                         >
                             <Briefcase className="w-5 h-5 text-orange-600" />
                             <span className="font-medium text-orange-600">Business</span>
+                        </Link>
+
+                        <Link
+                            to="/services/hardware"
+                            className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
+                        >
+                            <Cpu className="w-5 h-5 text-blue-600" />
+                            <span className="font-medium text-slate-700">Hardware</span>
+                        </Link>
+
+                        <Link
+                            to="/services/software"
+                            className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
+                        >
+                            <Code2 className="w-5 h-5 text-purple-600" />
+                            <span className="font-medium text-slate-700">Software</span>
                         </Link>
 
                         <Link
@@ -264,6 +280,13 @@ const Hardware = () => {
                     </div>
                 </div>
             </section>
+
+            {/* Service Plans Section */}
+            <ServicePricingCards
+                title="Our Service Plans"
+                subtitle="Transparent pricing for all your hardware support needs"
+                cards={content.hardware?.pricingCards}
+            />
 
             {/* Process Section - Timeline Style */}
             <section className="py-24 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white relative overflow-hidden">

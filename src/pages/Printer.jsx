@@ -5,7 +5,7 @@ import {
     Code, Settings, RefreshCw, Shield,
     CheckCircle, ArrowRight, Phone, Zap,
     Users, Terminal, Layout, Star, Sparkles, Layers,
-    Home, Briefcase, Printer, Network, Camera
+    Home, Briefcase, Printer as PrinterIcon, Network, Camera, Cpu, Code2
 } from 'lucide-react';
 
 import amcsImg from "../assets/amcs1.webp";
@@ -219,7 +219,7 @@ const Printer = () => {
             {/* Service Navigation Buttons */}
             <section className="py-[25px] bg-gradient-to-br from-slate-50 to-blue-50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex flex-wrap justify-center gap-3">
+                    <div className="flex flex-wrap justify-center gap-2">
                         <Link
                             to="/"
                             className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
@@ -237,10 +237,26 @@ const Printer = () => {
                         </Link>
 
                         <Link
+                            to="/services/hardware"
+                            className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
+                        >
+                            <Cpu className="w-5 h-5 text-blue-600" />
+                            <span className="font-medium text-slate-700">Hardware</span>
+                        </Link>
+
+                        <Link
+                            to="/services/software"
+                            className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
+                        >
+                            <Code2 className="w-5 h-5 text-purple-600" />
+                            <span className="font-medium text-slate-700">Software</span>
+                        </Link>
+
+                        <Link
                             to="/services/printer"
                             className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
                         >
-                            <Printer className="w-5 h-5 text-slate-600" />
+                            <PrinterIcon className="w-5 h-5 text-slate-600" />
                             <span className="font-medium text-slate-700">Printer</span>
                         </Link>
 
@@ -262,6 +278,13 @@ const Printer = () => {
                     </div>
                 </div>
             </section>
+
+            {/* Service Plans Section */}
+            <ServicePricingCards
+                title="Our Service Plans"
+                subtitle="Transparent pricing for all your software support needs"
+                cards={content.printer?.pricingCards}
+            />
 
             {/* Supported Software - Enhanced */}
             <section className="py-24 bg-white relative overflow-hidden">
