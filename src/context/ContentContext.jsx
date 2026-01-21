@@ -349,7 +349,7 @@ const initialContent = {
         ],
         comparisonTable: {
             title: "Software Support Plans",
-            headers: ["Basic", "Standard", "Premium"],
+            headers: ["Basic", "Standard ⭐", "Premium"],
             rows: [
                 { feature: "OS Support", values: [true, true, true] },
                 { feature: "Virus Removal", values: ["Remote", "Remote+Onsite", "Unlimited"] },
