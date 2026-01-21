@@ -30,6 +30,22 @@ const ContentSchema = new mongoose.Schema({
     about: {
         type: Object,
         default: {}
+    },
+    business: {
+        type: Object,
+        default: {}
+    },
+    printer: {
+        type: Object,
+        default: {}
+    },
+    networking: {
+        type: Object,
+        default: {}
+    },
+    cctv: {
+        type: Object,
+        default: {}
     }
 }, {
     timestamps: true,

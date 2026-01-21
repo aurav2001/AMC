@@ -165,7 +165,7 @@ const PlanDetails = () => {
         }
     };
 
-    const comparisonTableData = serviceCategory ? content[serviceCategory]?.comparisonTable : null;
+    const comparisonTableData = serviceCategory ? content[serviceCategory]?.comparisonTable : content.plans?.comparisonTable;
 
     return (
         <div className="min-h-screen bg-white">
@@ -340,8 +340,12 @@ const PlanDetails = () => {
 
                             {/* Annual Price Selection Block */}
                             <div className="w-full bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 p-4 mb-8 flex items-center justify-between min-h-[100px]">
-                                <div className="pl-4">
-                                    <div className="w-6 h-6 rounded-full border-2 border-slate-200 bg-slate-50"></div>
+                                <div className="pl-4 flex items-center gap-4">
+                                    <div className="w-6 h-6 rounded-full border-[6px] border-blue-600 bg-white"></div>
+                                    <div>
+                                        <h4 className="font-bold text-slate-900 text-lg">{plan.title || "Annual Plan"}</h4>
+                                        <p className="text-sm text-slate-500">Valid for 12 months</p>
+                                    </div>
                                 </div>
 
                                 <div className="bg-white rounded-xl shadow-sm border border-slate-100 py-2 px-6 text-center">
@@ -410,6 +414,55 @@ const PlanDetails = () => {
                     </div>
                 </div>
             )}
+
+            {/* Additional Info Section - Only for Plans Page (when no specific service plan is loaded, or generic plans) */}
+            {(!serviceCategory && content.plans?.additionalInfo) && (
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                        <div className="order-2 lg:order-1">
+                            <h2 className="text-3xl font-bold text-slate-900 mb-6">
+                                {content.plans.additionalInfo.title || "More Information"}
+                            </h2>
+                            <div className="text-lg text-slate-600 space-y-4 leading-relaxed whitespace-pre-line">
+                                {content.plans.additionalInfo.description || "Details about our plans and services."}
+                            </div>
+                        </div>
+                        {content.plans.additionalInfo.image && (
+                            <div className="order-1 lg:order-2">
+                                <img
+                                    src={content.plans.additionalInfo.image}
+                                    alt="Additional Info"
+                                    className="rounded-2xl shadow-lg w-full object-cover max-h-[500px]"
+                                />
+                            </div>
+                        )}
+                    </div>
+                </div>
+            )}
+
+            {/* Detailed Content Sections (Rich Text & Alternating Layout) - only for generic plans page */}
+            {!serviceCategory && content.plans?.detailedSections?.map((section) => (
+                <div key={section.id} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 border-t border-slate-100">
+                    <div className={`flex flex-col-reverse lg:flex-row${section.imagePosition === 'left' ? '-reverse' : ''} gap-12 lg:gap-20 items-center`}>
+                        <div className="flex-1 w-full">
+                            <h2 className="text-3xl font-bold text-slate-900 mb-6">{section.title}</h2>
+                            <div
+                                className="prose prose-lg prose-slate max-w-none text-slate-600 leading-relaxed"
+                                dangerouslySetInnerHTML={{ __html: section.content }}
+                            />
+                        </div>
+                        {section.image && (
+                            <div className="flex-1 w-full">
+                                <img
+                                    src={section.image}
+                                    alt={section.title}
+                                    className="rounded-2xl shadow-xl w-full object-cover aspect-video"
+                                />
+                            </div>
+                        )}
+                    </div>
+                </div>
+            ))}
         </div>
     );
 };

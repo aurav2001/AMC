@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { get, set } from 'idb-keyval';
 
 // Initial content structure
 const initialContent = {
@@ -171,6 +172,31 @@ const initialContent = {
             ]
         }
     },
+    comparisonTable: {
+        title: "Compare Our Plans",
+        headers: ["Basic", "Standard", "Premium"],
+        rows: [
+            { feature: "Preventive Visits", values: ["2/Year", "4/Year", "Unlimited"] },
+            { feature: "Remote Support", values: ["Business Hours", "24/7 Priority", "24/7 Dedicated"] },
+            { feature: "Parts Included", values: [false, false, true] },
+            { feature: "Standby Device", values: [false, true, true] },
+            { feature: "Server Support", values: [false, true, true] }
+        ]
+    },
+    additionalInfo: {
+        title: "More Information",
+        description: "Add details here to help users understand better.",
+        image: ""
+    },
+    detailedSections: [
+        {
+            id: 1,
+            title: "Why Maintenance Matters",
+            content: "<p>Regular maintenance ensures your systems run smoothly...</p>",
+            image: "",
+            imagePosition: "right" // 'left' or 'right'
+        }
+    ],
     software: {
         hero: {
             title: "Complete Software Solutions",
@@ -436,8 +462,6 @@ const initialContent = {
         softwareList: [],
         pricingCards: [
             {
-                title: "Printer AMC - Basic",
-                price: "2500",
                 title: "Single Printer AMC",
                 price: "2499",
                 originalPrice: "3499",
@@ -858,19 +882,26 @@ const ContentContext = createContext();
 const API_URL = 'http://localhost:5000/api/content';
 
 export const ContentProvider = ({ children }) => {
-    const [content, setContent] = useState(() => {
-        // Load from localStorage if available, otherwise use initialContent
-        const saved = localStorage.getItem('websiteContent');
-        if (saved) {
-            const parsed = JSON.parse(saved);
-            // Patch missing features
-            if (parsed.home?.whyUs?.rightCard && !parsed.home.whyUs.rightCard.features) {
-                parsed.home.whyUs.rightCard.features = initialContent.home.whyUs.rightCard.features;
+    const [content, setContent] = useState(initialContent);
+    // Load initialization
+    useEffect(() => {
+        const loadLocalContent = async () => {
+            try {
+                const saved = await get('websiteContent');
+                if (saved) {
+                    const parsed = typeof saved === 'string' ? JSON.parse(saved) : saved;
+                    // Patch missing features
+                    if (parsed.home?.whyUs?.rightCard && !parsed.home.whyUs.rightCard.features) {
+                        parsed.home.whyUs.rightCard.features = initialContent.home.whyUs.rightCard.features;
+                    }
+                    setContent(parsed);
+                }
+            } catch (error) {
+                console.error("Failed to load from IndexedDB:", error);
             }
-            return parsed;
-        }
-        return initialContent;
-    });
+        };
+        loadLocalContent();
+    }, []);
 
     // Fetch from API on mount
     useEffect(() => {
@@ -880,23 +911,13 @@ export const ContentProvider = ({ children }) => {
                 if (res.ok) {
                     const data = await res.json();
                     if (data && Object.keys(data).length > 0) {
-                        // Merge strategies can be complex. Here we prioritize DB data.
-                        // However, if we just added new fields (like hardware.whyChooseUs) and the DB is old,
-                        // we might miss them. Ideally, we should merge.
-                        // For now, let's use a shallow merge for top-level keys to be safe?
-                        // No, deep merge is needed. But assuming the user wants DB state:
-                        // We will setContent to data. But if data is missing 'hardware.whyChooseUs', it will be gone.
-                        // To fix this, we can assume if 'data' is missing keys that 'initialContent' has, we fill them.
-                        // A simple way is to spread initialContent and then data?
-                        // const merged = deepMerge(initialContent, data);
-                        // Let's rely on the user Resetting if they want the new structure, OR we seed it if empty.
                         // Patch missing features for existing data
                         if (data.home?.whyUs?.rightCard && !data.home.whyUs.rightCard.features) {
                             data.home.whyUs.rightCard.features = initialContent.home.whyUs.rightCard.features;
                         }
 
                         setContent(data);
-                        localStorage.setItem('websiteContent', JSON.stringify(data));
+                        set('websiteContent', data);
                     } else {
                         // DB is empty, seed it with current content
                         await saveToBackend(content);
@@ -935,8 +956,8 @@ export const ContentProvider = ({ children }) => {
 
             current[keys[keys.length - 1]] = value;
 
-            // Persist to localStorage
-            localStorage.setItem('websiteContent', JSON.stringify(newContent));
+            // Persist to IndexedDB
+            set('websiteContent', newContent).catch(err => console.error('Failed to save to IDB:', err));
 
             // Persist to Backend (send partial update)
             saveToBackend({ [path]: value });
@@ -947,11 +968,9 @@ export const ContentProvider = ({ children }) => {
 
     const resetContent = async () => {
         setContent(initialContent);
-        localStorage.setItem('websiteContent', JSON.stringify(initialContent));
+        set('websiteContent', initialContent);
         // Reset Backend
         await saveToBackend(initialContent);
-        // Note: Controller uses $set, so sending full object updates all fields. 
-        // Ideally we might want a DELETE /api/content/reset or similar, but sending full initialContent works with $set upsert.
     };
 
     const exportContent = () => {
@@ -968,7 +987,7 @@ export const ContentProvider = ({ children }) => {
         try {
             const imported = JSON.parse(jsonString);
             setContent(imported);
-            localStorage.setItem('websiteContent', JSON.stringify(imported));
+            await set('websiteContent', imported);
             await saveToBackend(imported);
             return true;
         } catch (error) {
