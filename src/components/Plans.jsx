@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Check, Cpu, Server, Database, Star, ArrowRight, FileCheck, Shield, Clock, Headphones, Wrench, Users, Zap } from 'lucide-react';
+import { Check, Cpu, Server, Database, Star, ArrowRight, FileCheck, Shield, Clock, Headphones, Wrench, Users, Zap, Monitor, Briefcase, Printer, Network, Camera, Code2 } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 import amcImage from '../assets/amcs1.webp';
 
@@ -101,7 +101,38 @@ const Plans = () => {
             <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-100 rounded-full blur-3xl opacity-40" />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                {/* ... existing header ... */}
+
+                {/* Service Category Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-20 animate-in fade-in slide-in-from-bottom-6 duration-700">
+                    {[
+                        { name: 'Business', icon: Briefcase, color: 'text-orange-600', bg: 'bg-orange-50', link: '/services/business' },
+                        { name: 'Hardware', icon: Cpu, color: 'text-blue-600', bg: 'bg-blue-50', link: '/services/hardware' },
+                        { name: 'Software', icon: Code2, color: 'text-purple-600', bg: 'bg-purple-50', link: '/services/software' },
+                        { name: 'Printer', icon: Printer, color: 'text-slate-600', bg: 'bg-slate-50', link: '/services/printer' },
+                        { name: 'Networking', icon: Network, color: 'text-cyan-600', bg: 'bg-cyan-50', link: '/services/networking' },
+                        { name: 'CCTV', icon: Camera, color: 'text-emerald-600', bg: 'bg-emerald-50', link: '/services/cctv' }
+                    ].map((service, idx) => (
+                        <Link
+                            key={idx}
+                            to={service.link}
+                            className="group relative overflow-hidden bg-white rounded-2xl p-4 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-slate-100 flex flex-col items-center text-center"
+                        >
+                            <div className={`p-3 rounded-xl ${service.bg} ${service.color} mb-3 group-hover:scale-110 transition-transform duration-300`}>
+                                <service.icon className="w-6 h-6" />
+                            </div>
+                            <h3 className="font-semibold text-slate-800 text-sm group-hover:text-primary-600 transition-colors">{service.name}</h3>
+                        </Link>
+                    ))}
+                </div>
+
+                {/* Hardware Service Plans */}
+                <ServicePricingCards
+                    title="Our Service Plans"
+                    subtitle="Transparent pricing for all your hardware support needs"
+                    cards={content.hardware?.pricingCards}
+                    linkTo="/services/hardware"
+                />
+
                 {/* Section Header */}
                 <div className="text-center mb-16">
                     {/* ... copied from existing code ... */}
@@ -239,21 +270,7 @@ const Plans = () => {
                     </div>
                 </motion.div>
 
-                {/* Software Pricing Plans */}
-                <ServicePricingCards
-                    title="Software Support Plans"
-                    subtitle="Transparent pricing for all your software support needs"
-                    cards={content.software?.pricingCards}
-                    linkTo="/software"
-                />
 
-                {/* Hardware Pricing Plans */}
-                <ServicePricingCards
-                    title="Our Plans"
-                    subtitle="Comprehensive maintenance packages for your hardware infrastructure"
-                    cards={content.hardware?.pricingCards}
-                    linkTo="/hardware"
-                />
 
                 {/* What's Included Section */}
                 <motion.div

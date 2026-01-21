@@ -129,6 +129,77 @@ const Hardware = () => {
                 </div>
             </section>
 
+
+            {/* Service Navigation Buttons */}
+            <section className="py-[25px] bg-gradient-to-br from-slate-50 to-blue-50">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex flex-wrap justify-center gap-2">
+                        <Link
+                            to="/"
+                            className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
+                        >
+                            <Home className="w-5 h-5 text-orange-600" />
+                            <span className="font-medium text-slate-700">Home</span>
+                        </Link>
+
+                        <Link
+                            to="/services/business"
+                            className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
+                        >
+                            <Briefcase className="w-5 h-5 text-orange-600" />
+                            <span className="font-medium text-orange-600">Business</span>
+                        </Link>
+
+                        <Link
+                            to="/services/hardware"
+                            className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
+                        >
+                            <Cpu className="w-5 h-5 text-blue-600" />
+                            <span className="font-medium text-slate-700">Hardware</span>
+                        </Link>
+
+                        <Link
+                            to="/services/software"
+                            className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
+                        >
+                            <Code2 className="w-5 h-5 text-purple-600" />
+                            <span className="font-medium text-slate-700">Software</span>
+                        </Link>
+
+                        <Link
+                            to="/services/printer"
+                            className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
+                        >
+                            <Printer className="w-5 h-5 text-slate-600" />
+                            <span className="font-medium text-slate-700">Printer</span>
+                        </Link>
+
+                        <Link
+                            to="/services/networking"
+                            className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
+                        >
+                            <Network className="w-5 h-5 text-cyan-600" />
+                            <span className="font-medium text-slate-700">Networking</span>
+                        </Link>
+
+                        <Link
+                            to="/services/cctv"
+                            className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
+                        >
+                            <Camera className="w-5 h-5 text-cyan-600" />
+                            <span className="font-medium text-cyan-600">CCTV</span>
+                        </Link>
+                    </div>
+                </div>
+            </section>
+
+            {/* Service Plans Section */}
+            <ServicePricingCards
+                title="Hardware AMC Packages"
+                subtitle="Choose the best plan for your hardware maintenance"
+                cards={content.hardware?.pricingCards}
+            />
+
             {/* Services Grid - Card Style */}
             <section className="py-24 relative overflow-hidden">
                 {/* Background Decorations */}
@@ -210,83 +281,10 @@ const Hardware = () => {
                 stats: []
             }} />
 
-            {/* Service Pricing Cards */}
-            <ServicePricingCards
-                title="Hardware AMC Packages"
-                subtitle="Choose the best plan for your hardware maintenance"
-                cards={content.hardware?.pricingCards}
-            />
 
 
-            {/* Service Navigation Buttons */}
-            <section className="py-[25px] bg-gradient-to-br from-slate-50 to-blue-50">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex flex-wrap justify-center gap-2">
-                        <Link
-                            to="/"
-                            className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
-                        >
-                            <Home className="w-5 h-5 text-orange-600" />
-                            <span className="font-medium text-slate-700">Home</span>
-                        </Link>
 
-                        <Link
-                            to="/services/business"
-                            className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
-                        >
-                            <Briefcase className="w-5 h-5 text-orange-600" />
-                            <span className="font-medium text-orange-600">Business</span>
-                        </Link>
 
-                        <Link
-                            to="/services/hardware"
-                            className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
-                        >
-                            <Cpu className="w-5 h-5 text-blue-600" />
-                            <span className="font-medium text-slate-700">Hardware</span>
-                        </Link>
-
-                        <Link
-                            to="/services/software"
-                            className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
-                        >
-                            <Code2 className="w-5 h-5 text-purple-600" />
-                            <span className="font-medium text-slate-700">Software</span>
-                        </Link>
-
-                        <Link
-                            to="/services/printer"
-                            className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
-                        >
-                            <Printer className="w-5 h-5 text-slate-600" />
-                            <span className="font-medium text-slate-700">Printer</span>
-                        </Link>
-
-                        <Link
-                            to="/services/networking"
-                            className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
-                        >
-                            <Network className="w-5 h-5 text-cyan-600" />
-                            <span className="font-medium text-slate-700">Networking</span>
-                        </Link>
-
-                        <Link
-                            to="/services/cctv"
-                            className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
-                        >
-                            <Camera className="w-5 h-5 text-cyan-600" />
-                            <span className="font-medium text-cyan-600">CCTV</span>
-                        </Link>
-                    </div>
-                </div>
-            </section>
-
-            {/* Service Plans Section */}
-            <ServicePricingCards
-                title="Our Service Plans"
-                subtitle="Transparent pricing for all your hardware support needs"
-                cards={content.hardware?.pricingCards}
-            />
 
             {/* Process Section - Timeline Style */}
             <section className="py-24 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white relative overflow-hidden">

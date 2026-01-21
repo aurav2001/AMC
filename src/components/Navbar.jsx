@@ -130,75 +130,81 @@ const Navbar = () => {
                                 <Link
                                     key={link.name}
                                     to={link.path}
-                                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${pathname === link.path
-                                        ? 'text-primary-600 bg-primary-50'
-                                        : 'text-slate-700 hover:text-primary-600 hover:bg-slate-50'
+                                    className={`relative px-4 py-2 text-sm font-medium transition-colors duration-300 group ${pathname === link.path
+                                        ? 'text-primary-600'
+                                        : 'text-slate-700 hover:text-primary-600'
                                         }`}
                                 >
                                     {link.name}
+                                    <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-primary-600 transform origin-left transition-transform duration-300 ${pathname === link.path ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`} />
                                 </Link>
                             ))}
 
                             {/* Services Dropdown */}
                             <div
-                                className="relative"
+                                className="relative group/idx"
                                 onMouseEnter={() => setServicesOpen(true)}
                                 onMouseLeave={() => setServicesOpen(false)}
                             >
                                 <button
-                                    className={`flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${isServiceActive
-                                        ? 'text-primary-600 bg-primary-50'
-                                        : 'text-slate-700 hover:text-primary-600 hover:bg-slate-50'
+                                    className={`flex items-center gap-1 px-4 py-2 text-sm font-medium transition-colors duration-300 relative group ${isServiceActive
+                                        ? 'text-primary-600'
+                                        : 'text-slate-700 hover:text-primary-600'
                                         }`}
                                 >
                                     Services
-                                    <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${servicesOpen ? 'rotate-180' : ''}`} />
+                                    <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${servicesOpen ? 'rotate-180' : ''}`} />
+                                    <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-primary-600 transform origin-left transition-transform duration-300 ${isServiceActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`} />
                                 </button>
 
                                 <AnimatePresence>
                                     {servicesOpen && (
                                         <motion.div
-                                            initial={{ opacity: 0, y: 10 }}
+                                            initial={{ opacity: 0, y: 15 }}
                                             animate={{ opacity: 1, y: 0 }}
-                                            exit={{ opacity: 0, y: 10 }}
+                                            exit={{ opacity: 0, y: 15 }}
                                             transition={{ duration: 0.2 }}
-                                            className="absolute top-full left-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden"
+                                            className="absolute top-full left-0 mt-2 w-[600px] bg-white rounded-2xl shadow-xl border border-slate-100/60 overflow-hidden backdrop-blur-xl"
                                         >
-                                            <div className="p-2">
+                                            <div className="absolute inset-0 bg-gradient-to-br from-white via-white to-slate-50/50" />
+                                            <div className="relative p-6 grid grid-cols-2 gap-3">
                                                 {serviceLinks.map((service) => (
                                                     <Link
                                                         key={service.name}
                                                         to={service.path}
-                                                        className={`flex items-start gap-4 p-4 rounded-xl transition-all ${pathname === service.path
-                                                            ? 'bg-primary-50'
-                                                            : 'hover:bg-slate-50'
+                                                        className={`flex items-start gap-4 p-4 rounded-xl transition-all duration-300 group hover:translate-x-1 hover:shadow-lg hover:shadow-slate-200/50 border border-transparent hover:border-slate-100 hover:bg-white ${pathname === service.path
+                                                            ? 'bg-primary-50 shadow-inner'
+                                                            : ''
                                                             }`}
                                                     >
-                                                        <div className={`p-2.5 rounded-lg ${pathname === service.path
-                                                            ? 'bg-primary-600 text-white'
-                                                            : 'bg-slate-100 text-slate-600'
+                                                        <div className={`p-3 rounded-xl transition-all duration-300 shadow-sm ${pathname === service.path
+                                                            ? 'bg-primary-600 text-white scale-110'
+                                                            : 'bg-white text-slate-500 group-hover:bg-primary-600 group-hover:text-white group-hover:scale-110 group-hover:shadow-md ring-1 ring-slate-100 group-hover:ring-primary-600'
                                                             }`}>
                                                             {service.icon}
                                                         </div>
                                                         <div>
-                                                            <span className={`font-semibold block ${pathname === service.path
-                                                                ? 'text-primary-600'
-                                                                : 'text-slate-800'
+                                                            <span className={`font-bold block mb-1 text-base transition-colors duration-200 ${pathname === service.path
+                                                                ? 'text-primary-700'
+                                                                : 'text-slate-700 group-hover:text-primary-700'
                                                                 }`}>
                                                                 {service.name}
                                                             </span>
-                                                            <span className="text-sm text-slate-500">{service.desc}</span>
+                                                            <span className="text-xs text-slate-500 font-medium leading-relaxed group-hover:text-slate-600">{service.desc}</span>
                                                         </div>
                                                     </Link>
                                                 ))}
                                             </div>
-                                            <div className="bg-slate-50 p-4 border-t border-slate-100">
+                                            <div className="relative bg-slate-50/80 p-4 border-t border-slate-100 flex justify-end">
                                                 <Link
                                                     to="/#plans"
-                                                    className="flex items-center justify-between text-sm font-medium text-slate-600 hover:text-primary-600"
+                                                    className="inline-flex items-center gap-2 text-sm font-semibold text-primary-600 hover:text-primary-700 transition-colors group/link"
                                                 >
-                                                    <span>View All AMC Plans</span>
-                                                    <ChevronDown className="w-4 h-4 -rotate-90" />
+                                                    <span className="bg-primary-100 p-1 rounded-full group-hover/link:bg-primary-200 transition-colors">
+                                                        <ShieldCheck className="w-4 h-4" />
+                                                    </span>
+                                                    View All Maintenance Plans
+                                                    <ChevronDown className="w-4 h-4 -rotate-90 group-hover/link:translate-x-1 transition-transform" />
                                                 </Link>
                                             </div>
                                         </motion.div>
@@ -208,53 +214,55 @@ const Navbar = () => {
 
                             {/* Plans Dropdown */}
                             <div
-                                className="relative"
+                                className="relative group/idx"
                                 onMouseEnter={() => setPlansOpen(true)}
                                 onMouseLeave={() => setPlansOpen(false)}
                             >
                                 <button
-                                    className={`flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${pathname.startsWith('/plan')
-                                        ? 'text-primary-600 bg-primary-50'
-                                        : 'text-slate-700 hover:text-primary-600 hover:bg-slate-50'
+                                    className={`flex items-center gap-1 px-4 py-2 text-sm font-medium transition-colors duration-300 relative group ${pathname.startsWith('/plan')
+                                        ? 'text-primary-600'
+                                        : 'text-slate-700 hover:text-primary-600'
                                         }`}
                                 >
                                     Plans
-                                    <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${plansOpen ? 'rotate-180' : ''}`} />
+                                    <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${plansOpen ? 'rotate-180' : ''}`} />
+                                    <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-primary-600 transform origin-left transition-transform duration-300 ${pathname.startsWith('/plan') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`} />
                                 </button>
 
                                 <AnimatePresence>
                                     {plansOpen && (
                                         <motion.div
-                                            initial={{ opacity: 0, y: 10 }}
+                                            initial={{ opacity: 0, y: 15 }}
                                             animate={{ opacity: 1, y: 0 }}
-                                            exit={{ opacity: 0, y: 10 }}
+                                            exit={{ opacity: 0, y: 15 }}
                                             transition={{ duration: 0.2 }}
-                                            className="absolute top-full left-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden"
+                                            className="absolute top-full left-0 mt-2 w-80 bg-white rounded-2xl shadow-xl border border-slate-100/60 overflow-hidden backdrop-blur-xl"
                                         >
-                                            <div className="p-2">
+                                            <div className="absolute inset-0 bg-gradient-to-br from-white via-white to-slate-50/50" />
+                                            <div className="relative p-3 space-y-1">
                                                 {planLinks.map((plan) => (
                                                     <Link
                                                         key={plan.name}
                                                         to={plan.path}
-                                                        className={`flex items-start gap-4 p-4 rounded-xl transition-all ${pathname === plan.path
+                                                        className={`flex items-start gap-4 p-3 rounded-xl transition-all duration-300 group hover:translate-x-1 hover:bg-slate-50 ${pathname === plan.path
                                                             ? 'bg-primary-50'
-                                                            : 'hover:bg-slate-50'
+                                                            : ''
                                                             }`}
                                                     >
-                                                        <div className={`p-2.5 rounded-lg ${pathname === plan.path
-                                                            ? 'bg-primary-600 text-white'
-                                                            : 'bg-slate-100 text-slate-600'
+                                                        <div className={`p-2.5 rounded-xl transition-all duration-300 ${pathname === plan.path
+                                                            ? 'bg-primary-600 text-white shadow-md'
+                                                            : 'bg-white text-slate-500 shadow-sm ring-1 ring-slate-100 group-hover:bg-primary-600 group-hover:text-white group-hover:ring-primary-600 group-hover:shadow-md'
                                                             }`}>
                                                             {plan.icon}
                                                         </div>
                                                         <div>
-                                                            <span className={`font-semibold block ${pathname === plan.path
-                                                                ? 'text-primary-600'
-                                                                : 'text-slate-800'
+                                                            <span className={`font-bold block text-sm mb-0.5 transition-colors ${pathname === plan.path
+                                                                ? 'text-primary-700'
+                                                                : 'text-slate-700 group-hover:text-primary-700'
                                                                 }`}>
                                                                 {plan.name}
                                                             </span>
-                                                            <span className="text-sm text-slate-500">{plan.desc}</span>
+                                                            <span className="text-xs text-slate-500 font-medium group-hover:text-slate-600">{plan.desc}</span>
                                                         </div>
                                                     </Link>
                                                 ))}
@@ -268,12 +276,13 @@ const Navbar = () => {
                                 <Link
                                     key={link.name}
                                     to={link.path}
-                                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${pathname === link.path
-                                        ? 'text-primary-600 bg-primary-50'
-                                        : 'text-slate-700 hover:text-primary-600 hover:bg-slate-50'
+                                    className={`relative px-4 py-2 text-sm font-medium transition-colors duration-300 group ${pathname === link.path
+                                        ? 'text-primary-600'
+                                        : 'text-slate-700 hover:text-primary-600'
                                         }`}
                                 >
                                     {link.name}
+                                    <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-primary-600 transform origin-left transition-transform duration-300 ${pathname === link.path ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`} />
                                 </Link>
                             ))}
 
