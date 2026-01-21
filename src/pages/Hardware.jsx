@@ -9,6 +9,7 @@ import {
 import WhyUs from '../components/WhyUs';
 import BrandsSection from '../components/BrandsSection';
 import ServicePricingCards from '../components/ServicePricingCards';
+import ComparisonTable from '../components/ComparisonTable';
 import { useContent } from '../context/ContentContext';
 const sf1 = "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=1200&q=80";
 
@@ -199,6 +200,9 @@ const Hardware = () => {
                 subtitle="Choose the best plan for your hardware maintenance"
                 cards={content.hardware?.pricingCards}
             />
+
+            {/* Comparison Table */}
+            <ComparisonTable data={content.hardware?.comparisonTable} />
 
             {/* Services Grid - Card Style */}
             <section className="py-24 relative overflow-hidden">

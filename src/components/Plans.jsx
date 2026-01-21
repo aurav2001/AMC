@@ -85,13 +85,16 @@ const Plans = () => {
     }));
 
     useEffect(() => {
-        if (plansInfo.videoUrl) {
-            setSelectedVideo(plansInfo.videoUrl);
-        } else {
-            const random = videoList[Math.floor(Math.random() * videoList.length)];
-            setSelectedVideo(random);
+        // Always pick a random video on mount to match user request "auto change next video when refresh page"
+        // We combine the fixed video (if any) with the list to give more variety, or just use the list.
+        const allVideos = [...videoList];
+        if (plansInfo.videoUrl && !allVideos.includes(plansInfo.videoUrl)) {
+            allVideos.push(plansInfo.videoUrl);
         }
-    }, [plansInfo.videoUrl]);
+
+        const randomVideo = allVideos[Math.floor(Math.random() * allVideos.length)];
+        setSelectedVideo(randomVideo);
+    }, []); // Run once on mount
 
 
     return (

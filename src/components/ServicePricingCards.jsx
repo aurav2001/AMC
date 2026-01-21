@@ -122,22 +122,14 @@ const ServicePricingCards = ({ title, subtitle, cards = [], linkTo }) => {
                                         ))}
                                     </ul>
 
-                                    {/* Footer Button */}
                                     <div className="mt-auto">
-                                        {linkTo ? (
-                                            <Link
-                                                to={linkTo}
-                                                className={`${theme.button} text-white font-semibold py-2.5 px-8 rounded-full transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 uppercase text-sm inline-block`}
-                                            >
-                                                {card.buttonText || "Read More"}
-                                            </Link>
-                                        ) : (
-                                            <button
-                                                className={`${theme.button} text-white font-semibold py-2.5 px-8 rounded-full transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 uppercase text-sm inline-block`}
-                                            >
-                                                {card.buttonText || "Read More"}
-                                            </button>
-                                        )}
+                                        <Link
+                                            to={card.link || `/plan/${card.title.toLowerCase().replace(/\s+/g, '-')}`}
+                                            state={{ cardData: card }} // Pass card data to handle dynamic loading without context lookup if needed
+                                            className={`${theme.button} text-white font-semibold py-2.5 px-8 rounded-full transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 uppercase text-sm inline-block`}
+                                        >
+                                            {card.buttonText || "Read More"}
+                                        </Link>
                                     </div>
                                 </div>
                             </motion.div>

@@ -13,6 +13,7 @@ import sf2 from "../assets/sf2.avif";
 import WhyUs from '../components/WhyUs';
 import BrandsSection from '../components/BrandsSection';
 import ServicePricingCards from '../components/ServicePricingCards';
+import ComparisonTable from '../components/ComparisonTable';
 import { useContent } from '../context/ContentContext';
 
 
@@ -367,6 +368,9 @@ const Software = () => {
                 subtitle="Transparent pricing for all your software support needs"
                 cards={content.software?.pricingCards}
             />
+
+            {/* Comparison Table */}
+            <ComparisonTable data={content.software?.comparisonTable} />
 
             {/* Brands We Support */}
             <BrandsSection title="Software & Hardware Brands" subtitle="We provide expert support for all major brands and platforms." />

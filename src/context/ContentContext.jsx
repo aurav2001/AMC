@@ -346,7 +346,17 @@ const initialContent = {
                 ],
                 buttonText: "Read More"
             }
-        ]
+        ],
+        comparisonTable: {
+            title: "Software Support Plans",
+            headers: ["Basic", "Standard", "Premium"],
+            rows: [
+                { feature: "OS Support", values: [true, true, true] },
+                { feature: "Virus Removal", values: ["Remote", "Remote+Onsite", "Unlimited"] },
+                { feature: "Data Backup", values: [false, true, true] },
+                { feature: "App Installation", values: [false, "5 Apps", "Unlimited"] }
+            ]
+        },
     },
     business: {
         hero: {
@@ -398,6 +408,16 @@ const initialContent = {
                 buttonText: "Read More"
             }
         ],
+        comparisonTable: {
+            title: "Business IT Plans",
+            headers: ["Startup", "Growth", "Enterprise"],
+            rows: [
+                { feature: "Workstations", values: ["Up to 5", "Up to 20", "Unlimited"] },
+                { feature: "Server Support", values: [false, "Basic", "Advanced"] },
+                { feature: "Network Security", values: ["Basic Firewall", "Advanced", "Zero Trust"] },
+                { feature: "Onsite SLA", values: ["48h", "24h", "4h"] }
+            ]
+        },
         whyChooseUs: {}
     },
     printer: {
@@ -418,38 +438,33 @@ const initialContent = {
             {
                 title: "Printer AMC - Basic",
                 price: "2500",
-                originalPrice: "3000",
-                image: "/images/printer-basic.png",
-                color: "orange",
-                category: "Printer Maintenance",
-                features: [
-                    "Quarterly Maintenance Visits",
-                    "Cleaning & Calibration",
-                    "Driver Updates",
-                    "Remote Support",
-                    "Parts at Additional Cost",
-                    "Business Hours Support"
-                ],
-                buttonText: "Read More"
+                title: "Single Printer AMC",
+                price: "2499",
+                originalPrice: "3499",
+                features: ["Unlimited Service Calls", "Driver Updates", "Network Config", "Part Replacement (Extra)"],
+                color: "pink",
+                buttonText: "Choose Plan"
             },
             {
-                title: "Printer AMC - Premium",
-                price: "5000",
-                originalPrice: "6000",
-                image: "/images/printer-premium.png",
-                color: "pink",
-                category: "Premium Printer Support",
-                features: [
-                    "Monthly Maintenance Visits",
-                    "Priority Breakdown Support",
-                    "Consumables Included",
-                    "Unlimited Service Calls",
-                    "24/7 Support Available",
-                    "Replacement Printer on Failure"
-                ],
-                buttonText: "Read More"
+                title: "Office Printer Pack",
+                price: "8999",
+                originalPrice: "11999",
+                features: ["Up to 5 Printers", "Priority Support", "Consumables Discount", "Monthly Maintenance"],
+                color: "blue",
+                buttonText: "Choose Plan"
             }
         ],
+        comparisonTable: {
+            title: "Printing Solutions",
+            headers: ["Basic", "Professional", "Enterprise"],
+            rows: [
+                { feature: "Cartridge Refill", values: [true, true, true] },
+                { feature: "Paper Jam Fix", values: [true, true, true] },
+                { feature: "Network Setup", values: [false, true, true] },
+                { feature: "Parts Replacement", values: ["Discounted", "Included", "Included"] },
+                { feature: "Response Time", values: ["48 Hours", "24 Hours", "4 Hours"] }
+            ]
+        },
         whyChooseUs: {}
     },
     networking: {
@@ -464,8 +479,48 @@ const initialContent = {
             { value: "100+", label: "Security Audits" },
             { value: "24/7", label: "Monitoring" }
         ],
-        services: [],
-        softwareList: [],
+        services: [
+            {
+                title: "Network Design & Implementation",
+                description: "Custom network architecture design and deployment for optimal performance and scalability.",
+                features: ["LAN/WAN Design", "Wireless Planning", "VLAN Configuration", "Scalability Planning"],
+                gradient: "from-blue-500 to-indigo-500",
+                iconBg: "bg-gradient-to-br from-blue-500 to-indigo-600",
+                icon: "Network"
+            },
+            {
+                title: "Network Security",
+                description: "Comprehensive security solutions to protect your network from external and internal threats.",
+                features: ["Firewall Setup", "VPN Configuration", "Intrusion Detection", "Security Audits"],
+                gradient: "from-red-500 to-rose-500",
+                iconBg: "bg-gradient-to-br from-red-500 to-rose-600",
+                icon: "Shield"
+            },
+            {
+                title: "Structured Cabling",
+                description: "Professional cabling services ensuring organized and reliable physical connectivity.",
+                features: ["Cat6/Fiber Optic", "Cable Management", "Server Room Setup", "Patch Panel Termination"],
+                gradient: "from-amber-500 to-orange-500",
+                iconBg: "bg-gradient-to-br from-amber-500 to-orange-600",
+                icon: "Settings"
+            },
+            {
+                title: "Monitoring & Maintenance",
+                description: "24/7 network monitoring/proactive maintenance to minimize downtime.",
+                features: ["Performance Monitoring", "Traffic Analysis", "Firmware Updates", "Preventive Maintenance"],
+                gradient: "from-emerald-500 to-green-500",
+                iconBg: "bg-gradient-to-br from-emerald-500 to-green-600",
+                icon: "Activity"
+            }
+        ],
+        softwareList: [
+            { name: "Cisco IOS", category: "Network OS", icon: "🌐" },
+            { name: "Wireshark", category: "Analysis", icon: "🔍" },
+            { name: "SolarWinds", category: "Monitoring", icon: "📊" },
+            { name: "PfSense", category: "Firewall", icon: "🛡️" },
+            { name: "Ubiquiti", category: "Management", icon: "📡" },
+            { name: "OpenVPN", category: "Security", icon: "🔒" }
+        ],
         pricingCards: [
             {
                 title: "Network AMC - Basic",
@@ -482,7 +537,18 @@ const initialContent = {
                     "Security Updates",
                     "Business Hours Support"
                 ],
-                buttonText: "Read More"
+                comparisonTable: {
+                    title: "Networking Service Plans",
+                    headers: ["Basic", "Enterprise"],
+                    rows: [
+                        { feature: "Router Config", values: [true, true] },
+                        { feature: "Wi-Fi Optimization", values: [true, true] },
+                        { feature: "Remote Support", values: ["Business Hours", "24/7"] },
+                        { feature: "Onsite Visits", values: ["4/Year", "Unlimited"] },
+                        { feature: "Security Audit", values: [false, true] },
+                        { feature: "Dedicated Engineer", values: [false, true] }
+                    ]
+                }, buttonText: "Read More"
             },
             {
                 title: "Network AMC - Enterprise",
@@ -502,7 +568,39 @@ const initialContent = {
                 buttonText: "Read More"
             }
         ],
-        whyChooseUs: {}
+        whyChooseUs: {
+            badge: "Why Choose Us",
+            heading: "Expert Networking Solutions",
+            subtitle: "Building reliable, secure, and fast networks involves more than just plugging in cables.",
+            reasons: [
+                { title: "Network Certified", description: "Our engineers are CCNA/CCNP certified experts.", stat: "100%", statLabel: "Certified Team", color: "from-blue-500 to-indigo-600" },
+                { title: "Custom Design", description: "Networks tailored specifically to your office layout and needs.", stat: "500+", statLabel: "Networks Built", color: "from-purple-500 to-fuchsia-600" },
+                { title: "Security First", description: "We prioritize security in every layer of your network design.", stat: "0", statLabel: "Security Breaches", color: "from-green-500 to-emerald-600" },
+                { title: "Rapid Support", description: "Quick onsite and remote troubleshooting for connectivity issues.", stat: "30min", statLabel: "Avg Response", color: "from-orange-500 to-red-600" }
+            ],
+            ctaHeading: "Upgrade Your Network Infrastructure",
+            ctaDescription: "Get a free network audit today and discover how to improve your business connectivity and security.",
+            features: [
+                "Free Site Survey",
+                "Detailed Network Map",
+                "Security Vulnerability Scan",
+                "Bandwidth Optimization"
+            ]
+        },
+        brands: {
+            title: "Networking Brands We Support",
+            subtitle: "We work with top-tier networking hardware manufacturers.",
+            list: [
+                { name: 'Cisco', category: 'network' },
+                { name: 'Juniper', category: 'network' },
+                { name: 'Ubiquiti', category: 'network' },
+                { name: 'TP-Link', category: 'network' },
+                { name: 'D-Link', category: 'network' },
+                { name: 'MikroTik', category: 'network' },
+                { name: 'Fortinet', category: 'security' },
+                { name: 'Sophos', category: 'security' }
+            ]
+        }
     },
     cctv: {
         hero: {
@@ -520,40 +618,34 @@ const initialContent = {
         softwareList: [],
         pricingCards: [
             {
-                title: "CCTV AMC - Basic",
-                price: "3000",
-                originalPrice: "4000",
-                image: "/images/cctv-basic.png",
-                color: "green",
-                category: "CCTV Maintenance",
-                features: [
-                    "Quarterly Maintenance Visits",
-                    "Camera Cleaning & Alignment",
-                    "DVR/NVR Health Check",
-                    "Remote Viewing Setup",
-                    "Storage Management",
-                    "Business Hours Support"
-                ],
-                buttonText: "Read More"
+                title: "4 Channel Setup",
+                price: "3999",
+                originalPrice: "5999",
+                features: ["4 Camera Maintenance", "DVR/NVR Check", "Wiring Check", "Remote View Setup"],
+                color: "blue",
+                buttonText: "Choose Plan"
             },
             {
-                title: "CCTV AMC - Premium",
-                price: "6000",
-                originalPrice: "7500",
-                image: "/images/cctv-premium.png",
+                title: "8-16 Channel Setup",
+                price: "7999",
+                originalPrice: "9999",
+                features: ["Up to 16 Cameras", "Storage Health Check", "Firmware Updates", "Lens Cleaning"],
                 color: "purple",
-                category: "Premium CCTV Support",
-                features: [
-                    "Monthly Maintenance Visits",
-                    "24/7 Monitoring Support",
-                    "Unlimited Service Calls",
-                    "Cloud Backup Integration",
-                    "Priority Breakdown Support",
-                    "Replacement Camera on Failure"
-                ],
-                buttonText: "Read More"
+                buttonText: "Choose Plan"
             }
         ],
+        comparisonTable: {
+            title: "CCTV Maintenance Covers",
+            headers: ["4 Channel", "8-16 Channel", "Enterprise (>32)"],
+            rows: [
+                { feature: "Camera Cleaning", values: ["Quarterly", "Bi-Monthly", "Monthly"] },
+                { feature: "DVR/NVR Check", values: [true, true, true] },
+                { feature: "Storage Health", values: ["Basic Check", "Deep Scan", "RAID Management"] },
+                { feature: "Remote View Config", values: [true, true, true] },
+                { feature: "Cable Replacement", values: ["Upto 10m Free", "Upto 25m Free", "Included"] },
+                { feature: "Response Time", values: ["48 Hours", "24 Hours", "4 Hours"] }
+            ]
+        },
         whyChooseUs: {}
     },
     hardware: {
@@ -738,7 +830,17 @@ const initialContent = {
                 ],
                 buttonText: "Read More"
             }
-        ]
+        ],
+        comparisonTable: {
+            title: "Hardware AMC Plans",
+            headers: ["Silver", "Gold", "Platinum"],
+            rows: [
+                { feature: "PM Visits", values: ["2/Year", "4/Year", "Monthly"] },
+                { feature: "Parts Included", values: [false, "Discounted", true] },
+                { feature: "Standby Device", values: [false, false, true] },
+                { feature: "Remote Support", values: [true, true, true] }
+            ]
+        },
     },
     contact: {
         phone: "+91 9810443288",

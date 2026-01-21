@@ -13,6 +13,7 @@ import sf2 from "../assets/sf2.avif";
 import WhyUs from '../components/WhyUs';
 import BrandsSection from '../components/BrandsSection';
 import ServicePricingCards from '../components/ServicePricingCards';
+import ComparisonTable from '../components/ComparisonTable';
 import { useContent } from '../context/ContentContext';
 
 
@@ -172,10 +173,10 @@ const Networking = () => {
                             Our Services
                         </span>
                         <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
-                            Software <span className="text-purple-600">Solutions</span>
+                            Networking <span className="text-purple-600">Solutions</span>
                         </h2>
                         <p className="text-xl text-slate-600">
-                            Expert software support tailored to your business requirements
+                            Expert Networking support tailored to your business requirements
                         </p>
                     </motion.div>
 
@@ -297,13 +298,13 @@ const Networking = () => {
                         >
                             <span className="inline-flex items-center gap-2 px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-semibold mb-6">
                                 <Layers className="w-4 h-4" />
-                                Supported Software
+                                Supported Networking
                             </span>
                             <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
-                                Software We <span className="text-purple-600">Support</span>
+                                Networking We <span className="text-purple-600">Support</span>
                             </h2>
                             <p className="text-lg text-slate-600 mb-10">
-                                We provide expert support for a wide range of business and enterprise software solutions.
+                                We provide expert support for a wide range of business and enterprise Networking solutions.
                             </p>
                             <div className="grid grid-cols-2 gap-4">
                                 {softwareList.map((software, idx) => (
@@ -369,8 +370,11 @@ const Networking = () => {
                 cards={content.networking?.pricingCards}
             />
 
+            {/* Comparison Table */}
+            <ComparisonTable data={content.networking?.comparisonTable} />
+
             {/* Brands We Support */}
-            <BrandsSection title="Software & Hardware Brands" subtitle="We provide expert support for all major brands and platforms." />
+            <BrandsSection data={content.networking?.brands} />
 
             {/* CTA Section - Premium Design */}
             <section className="py-24">
@@ -392,7 +396,7 @@ const Networking = () => {
                                 Get Started Today
                             </span>
                             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                                Need Software Assistance?
+                                Need Networking Assistance?
                             </h2>
                             <p className="text-xl text-purple-100 mb-10 max-w-2xl mx-auto">
                                 Get expert help with installation, configuration, or troubleshooting today.

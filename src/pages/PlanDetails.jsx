@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useLocation } from 'react-router-dom';
 import { ArrowLeft, Check, X, Send, Cpu, Server, Database, Loader2, Monitor, Shield, Clock, Users, Wrench, HardDrive, Wifi, Settings, Phone, Mail, Award, Briefcase } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useContent } from '../context/ContentContext';
 import amc12 from "../assets/amc12.jpg";
+import ComparisonTable from '../components/ComparisonTable';
 
 const iconMap = {
     Cpu: <Cpu className="w-16 h-16 text-blue-500" />,
@@ -73,6 +74,7 @@ const PlanDetails = () => {
     const { content } = useContent();
     const [showModal, setShowModal] = useState(false);
     const [selectedVideo, setSelectedVideo] = useState("");
+    const location = useLocation();
 
     // Random video selection on mount
     useEffect(() => {
@@ -90,8 +92,35 @@ const PlanDetails = () => {
 
     const [status, setStatus] = useState("idle");
 
-    const plan = content.plans?.[id];
-    const featureDetails = planFeatureDetails[id] || planFeatureDetails.basic;
+    // Try to find plan from:
+    // 1. location state (if passed from Link)
+    // 2. content.plans (existing logic)
+    // 3. search through all service pricingCards
+    let plan = location.state?.cardData;
+
+    if (!plan && content.plans?.[id]) {
+        plan = content.plans[id];
+    }
+
+    // Fallback: Search in all services if not found yet
+    if (!plan) {
+        const services = ['networking', 'hardware', 'software', 'printer', 'cctv', 'business'];
+        for (const service of services) {
+            const found = content[service]?.pricingCards?.find(c =>
+                c.title.toLowerCase().replace(/\s+/g, '-') === id
+            );
+            if (found) {
+                plan = found;
+                // Add default description/details if missing in the card
+                if (!plan.description) plan.description = `${plan.title} for ${service} solutions.`;
+                if (!plan.detailedDescription) plan.detailedDescription = plan.description;
+                if (!plan.inclusions) plan.inclusions = plan.features;
+                break;
+            }
+        }
+    }
+
+    const featureDetails = planFeatureDetails[id] || planFeatureDetails.basic; // Fallback to basic details if ID doesn't match predefined keys
 
     if (!plan) {
         return (

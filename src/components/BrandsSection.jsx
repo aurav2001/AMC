@@ -1,9 +1,10 @@
 import { motion } from 'framer-motion';
 import { useContent } from '../context/ContentContext';
 
-const BrandsSection = () => {
+const BrandsSection = ({ data }) => {
     const { content } = useContent();
-    const brandsData = content.home?.brands || { list: [] };
+    // Use provided data, or fallback to home brands, or empty object
+    const brandsData = data || content.home?.brands || { list: [] };
     const { title = "Brands We Support", subtitle = "Expert service for all major hardware brands.", list = [] } = brandsData;
 
     return (

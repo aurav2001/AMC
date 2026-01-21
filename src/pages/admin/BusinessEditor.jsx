@@ -4,6 +4,7 @@ import { Save, Plus, Trash2, Image as ImageIcon, ChevronDown, ChevronUp } from '
 import IconPicker from '../../components/admin/IconPicker';
 import ImageUpload from '../../components/admin/ImageUpload';
 import DynamicIcon from '../../components/DynamicIcon';
+import ComparisonTableEditor from '../../components/admin/ComparisonTableEditor';
 
 
 const BusinessEditor = () => {
@@ -210,6 +211,10 @@ const BusinessEditor = () => {
     const handleSave = () => {
         setSaved(true);
         setTimeout(() => setSaved(false), 2000);
+    };
+
+    const handleComparisonTableChange = (newData) => {
+        updateContent('business.comparisonTable', newData);
     };
 
     return (
@@ -812,6 +817,14 @@ const BusinessEditor = () => {
                         </div>
                     ))}
                 </div>
+            </div>
+
+            {/* Comparison Table */}
+            <div className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100">
+                <ComparisonTableEditor
+                    data={content.business?.comparisonTable}
+                    onChange={handleComparisonTableChange}
+                />
             </div>
 
             {/* Icon Picker Modal */}
