@@ -23,6 +23,7 @@ import BusinessEditor from './pages/admin/BusinessEditor';
 import PrinterEditor from './pages/admin/PrinterEditor';
 import NetworkingEditor from './pages/admin/NetworkingEditor';
 import CCTVEditor from './pages/admin/CCTVEditor';
+import AboutEditor from './pages/admin/AboutEditor';
 import ProtectedRoute from './components/ProtectedRoute';
 import KeyboardShortcuts from './components/KeyboardShortcuts';
 
@@ -64,6 +65,7 @@ function App() {
           <Route path="printer" element={<PrinterEditor />} />
           <Route path="networking" element={<NetworkingEditor />} />
           <Route path="cctv" element={<CCTVEditor />} />
+          <Route path="about" element={<AboutEditor />} />
           <Route path="settings" element={<SettingsEditor />} />
         </Route>
 

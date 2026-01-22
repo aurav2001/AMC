@@ -1,4 +1,5 @@
 import { Award, Users, Clock, CheckCircle } from 'lucide-react';
+import { useContent } from '../context/ContentContext';
 
 const stats = [
     { label: 'Happy Clients', value: '100+', icon: <Users className="w-6 h-6 text-primary-500" /> },
@@ -21,6 +22,7 @@ const team = [
 ];
 
 const About = () => {
+    const { content } = useContent();
     return (
         <div className="bg-slate-50 min-h-screen pb-20 pt-10">
             {/* Hero Section */}
@@ -88,6 +90,30 @@ const About = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Dynamic Sections */}
+            {content.about?.dynamicSections?.map((section, idx) => (
+                <div key={section.id || idx} className={`py-24 ${idx % 2 === 0 ? 'bg-slate-50' : 'bg-white'}`}>
+                    <div className="max-w-7xl mx-auto px-4">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                            <div className={`relative ${section.imagePosition === 'right' ? 'lg:order-2' : ''}`}>
+                                <div className="absolute inset-0 bg-primary-600 rounded-3xl -rotate-3 opacity-10 transform -translate-x-4 -translate-y-4"></div>
+                                <img
+                                    src={section.image || 'https://via.placeholder.com/800x600?text=No+Image'}
+                                    alt={section.title}
+                                    className="relative rounded-3xl shadow-2xl w-full object-cover h-[400px]"
+                                />
+                            </div>
+                            <div className={section.imagePosition === 'right' ? 'lg:order-1' : ''}>
+                                <h2 className="text-4xl font-bold text-slate-900 mb-6">{section.title}</h2>
+                                <p className="text-lg text-slate-600 leading-relaxed whitespace-pre-wrap">
+                                    {section.content}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ))}
 
             {/* Team Section */}
             <div className="bg-white py-24 border-t border-slate-100">

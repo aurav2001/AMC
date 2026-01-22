@@ -5,6 +5,7 @@ import IconPicker from '../../components/admin/IconPicker';
 import ImageUpload from '../../components/admin/ImageUpload';
 import DynamicIcon from '../../components/DynamicIcon';
 import ComparisonTableEditor from '../../components/admin/ComparisonTableEditor';
+import DetailedSectionsEditor from '../../components/admin/DetailedSectionsEditor';
 
 
 const SoftwareEditor = () => {
@@ -12,6 +13,11 @@ const SoftwareEditor = () => {
     const [saved, setSaved] = useState(false);
     const [iconPickerOpen, setIconPickerOpen] = useState(false);
     const [currentIconField, setCurrentIconField] = useState(null); // { type: 'service'|'reason'|'software', index: number }
+    const [expandedSections, setExpandedSections] = useState({});
+
+    const toggleSectionEditor = (index) => {
+        setExpandedSections(prev => ({ ...prev, [index]: !prev[index] }));
+    };
 
     const openIconPicker = (type, index) => {
         setCurrentIconField({ type, index });
@@ -813,6 +819,28 @@ const SoftwareEditor = () => {
                                         </div>
                                     ))}
                                 </div>
+                            </div>
+
+                            <div className="mt-6 pt-4 border-t border-slate-200">
+                                <button
+                                    onClick={() => toggleSectionEditor(index)}
+                                    className="flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium"
+                                >
+                                    {expandedSections[index] ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                                    {expandedSections[index] ? 'Hide Page Content Editor' : 'Manage Page Content (Plan Details)'}
+                                </button>
+
+                                {expandedSections[index] && (
+                                    <div className="mt-6">
+                                        <p className="text-sm text-slate-500 mb-4">
+                                            Add dynamic sections that will appear on this plan's detailed page.
+                                        </p>
+                                        <DetailedSectionsEditor
+                                            sections={card.detailedSections || []}
+                                            onChange={(newSections) => handlePricingCardChange(index, 'detailedSections', newSections)}
+                                        />
+                                    </div>
+                                )}
                             </div>
                         </div>
                     ))}

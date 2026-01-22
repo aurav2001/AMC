@@ -391,8 +391,9 @@ const PlansEditor = () => {
                                     </button>
                                 </div>
 
-                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                                    <div className="space-y-4">
+                                <div className="space-y-6">
+                                    {/* Top Row: Title and Controls */}
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div>
                                             <label className="block text-sm font-semibold text-slate-700 mb-2">Section Title</label>
                                             <input
@@ -406,10 +407,9 @@ const PlansEditor = () => {
                                                 className="w-full px-4 py-2 border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none"
                                             />
                                         </div>
-
                                         <div>
                                             <label className="block text-sm font-semibold text-slate-700 mb-2">Image Position</label>
-                                            <div className="flex gap-4">
+                                            <div className="flex gap-4 h-[42px] items-center">
                                                 <label className="flex items-center gap-2 cursor-pointer">
                                                     <input
                                                         type="radio"
@@ -438,45 +438,51 @@ const PlansEditor = () => {
                                                 </label>
                                             </div>
                                         </div>
-
-                                        <div>
-                                            <label className="block text-sm font-semibold text-slate-700 mb-2">Section Image</label>
-                                            <ImageUpload
-                                                value={section.image || ''}
-                                                onChange={(base64) => {
-                                                    const newSections = [...content.plans.detailedSections];
-                                                    newSections[index].image = base64;
-                                                    updateContent('plans.detailedSections', newSections);
-                                                }}
-                                                label="Upload Image"
-                                            />
-                                        </div>
                                     </div>
 
-                                    <div>
-                                        <label className="block text-sm font-semibold text-slate-700 mb-2">Content (Rich Text)</label>
-                                        <div className="bg-white rounded-lg border border-slate-200 overflow-hidden">
-                                            <ReactQuill
-                                                theme="snow"
-                                                value={section.content || ''}
-                                                onChange={(value) => {
-                                                    const newSections = [...content.plans.detailedSections];
-                                                    newSections[index].content = value;
-                                                    updateContent('plans.detailedSections', newSections);
-                                                }}
-                                                modules={{
-                                                    toolbar: [
-                                                        [{ 'header': [1, 2, 3, false] }],
-                                                        ['bold', 'italic', 'underline', 'strike'],
-                                                        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                                                        ['link', 'clean']
-                                                    ],
-                                                }}
-                                                className="h-64 mb-12" // mb-12 to account for toolbar height
-                                            />
+                                    {/* Content: Image and Text Stacked */}
+                                    <div className="space-y-6">
+                                        <div>
+                                            <label className="block text-sm font-semibold text-slate-700 mb-2">Section Image</label>
+                                            <div className="max-w-md">
+                                                <ImageUpload
+                                                    value={section.image || ''}
+                                                    onChange={(base64) => {
+                                                        const newSections = [...content.plans.detailedSections];
+                                                        newSections[index].image = base64;
+                                                        updateContent('plans.detailedSections', newSections);
+                                                    }}
+                                                    label=""
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label className="block text-sm font-semibold text-slate-700 mb-2">Content (Rich Text)</label>
+                                            <div className="bg-white rounded-lg border border-slate-200 overflow-hidden">
+                                                <ReactQuill
+                                                    theme="snow"
+                                                    value={section.content || ''}
+                                                    onChange={(value) => {
+                                                        const newSections = [...content.plans.detailedSections];
+                                                        newSections[index].content = value;
+                                                        updateContent('plans.detailedSections', newSections);
+                                                    }}
+                                                    modules={{
+                                                        toolbar: [
+                                                            [{ 'header': [1, 2, 3, false] }],
+                                                            ['bold', 'italic', 'underline', 'strike'],
+                                                            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                                                            ['link', 'code-block', 'clean']
+                                                        ],
+                                                    }}
+                                                    className="h-64 mb-12"
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                         ))}
                     </div>

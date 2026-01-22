@@ -440,23 +440,25 @@ const PlanDetails = () => {
                 </div>
             )}
 
-            {/* Detailed Content Sections (Rich Text & Alternating Layout) - only for generic plans page */}
-            {!serviceCategory && content.plans?.detailedSections?.map((section) => (
+            {/* Detailed Content Sections (Rich Text & Alternating Layout) */}
+            {(plan.detailedSections || (!serviceCategory && content.plans?.detailedSections) || []).map((section) => (
                 <div key={section.id} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 border-t border-slate-100">
                     <div className={`flex flex-col-reverse lg:flex-row${section.imagePosition === 'left' ? '-reverse' : ''} gap-12 lg:gap-20 items-center`}>
                         <div className="flex-1 w-full">
                             <h2 className="text-3xl font-bold text-slate-900 mb-6">{section.title}</h2>
                             <div
                                 className="prose prose-lg prose-slate max-w-none text-slate-600 leading-relaxed"
+                                style={{ overflowWrap: 'anywhere', maxWidth: '100%' }}
                                 dangerouslySetInnerHTML={{ __html: section.content }}
                             />
                         </div>
                         {section.image && (
-                            <div className="flex-1 w-full">
+                            <div className="flex-1 w-full relative">
+                                <div className={`absolute inset-0 bg-blue-600/5 rounded-2xl transform ${section.imagePosition === 'left' ? '-translate-x-4 -translate-y-4' : 'translate-x-4 translate-y-4'}`}></div>
                                 <img
                                     src={section.image}
                                     alt={section.title}
-                                    className="rounded-2xl shadow-xl w-full object-cover aspect-video"
+                                    className="relative rounded-2xl shadow-xl w-full object-cover"
                                 />
                             </div>
                         )}

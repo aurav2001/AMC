@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import {
-    LayoutDashboard, Home, CreditCard, Code, Cpu,
-    Settings, LogOut, Save, RotateCcw, Download, Upload,
-    Menu, X, Building2, Printer, Network, Camera
+    LayoutDashboard, Menu, X, Building2, Printer, Network, Camera, Info,
+    Home, CreditCard, Code, Cpu, Settings, Download, RotateCcw, LogOut
 } from 'lucide-react';
 
 import { useContent } from '../../context/ContentContext';
@@ -18,6 +17,7 @@ const AdminLayout = () => {
     const menuItems = [
         { path: '/admin/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
         { path: '/admin/home', icon: Home, label: 'Home Page' },
+        { path: '/admin/about', icon: Info, label: 'About Page' },
         { path: '/admin/plans', icon: CreditCard, label: 'Plans & Pricing' },
         { path: '/admin/software', icon: Code, label: 'Software Page' },
         { path: '/admin/hardware', icon: Cpu, label: 'Hardware Page' },

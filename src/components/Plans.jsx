@@ -11,26 +11,25 @@ import ServicePricingCards from './ServicePricingCards';
 
 const gradientColors = {
     basic: {
-        bg: 'from-blue-50 to-white',
-        accent: 'bg-blue-500',
-        icon: 'text-blue-600 bg-blue-100',
-        button: 'bg-blue-600 hover:bg-blue-700',
-        badge: 'bg-blue-100 text-blue-700'
+        accent: 'text-blue-600',
+        blob: 'bg-blue-50',
+        iconBg: 'bg-blue-100',
+        button: 'bg-blue-600 hover:bg-blue-700 shadow-blue-200',
+        popular: false
     },
     standard: {
-        bg: 'from-indigo-50 to-white',
-        accent: 'bg-indigo-500',
-        icon: 'text-indigo-600 bg-indigo-100',
-        button: 'bg-indigo-600 hover:bg-indigo-700',
-        badge: 'bg-indigo-100 text-indigo-700',
+        accent: 'text-violet-600',
+        blob: 'bg-violet-50',
+        iconBg: 'bg-violet-100',
+        button: 'bg-violet-600 hover:bg-violet-700 shadow-violet-200',
         popular: true
     },
     premium: {
-        bg: 'from-purple-50 to-white',
-        accent: 'bg-purple-500',
-        icon: 'text-purple-600 bg-purple-100',
-        button: 'bg-purple-600 hover:bg-purple-700',
-        badge: 'bg-purple-100 text-purple-700'
+        accent: 'text-orange-600',
+        blob: 'bg-orange-50',
+        iconBg: 'bg-orange-100',
+        button: 'bg-orange-600 hover:bg-orange-700 shadow-orange-200',
+        popular: false
     },
 };
 
@@ -78,11 +77,13 @@ const Plans = () => {
     const plansInfo = content.home?.plansSection || {};
     const [selectedVideo, setSelectedVideo] = useState("");
 
-    // Convert plans object to array with stable keys
-    const plansArray = Object.entries(content.plans || {}).map(([key, plan]) => ({
-        ...plan,
-        id: plan.id || key // Ensure id exists, fallback to key
-    }));
+    // Convert plans object to array with stable keys and filter out empty plans
+    const plansArray = Object.entries(content.plans || {})
+        .map(([key, plan]) => ({
+            ...plan,
+            id: plan.id || key // Ensure id exists, fallback to key
+        }))
+        .filter(plan => plan.name && plan.price); // Only show plans with name and price
 
     useEffect(() => {
         // Always pick a random video on mount to match user request "auto change next video when refresh page"
@@ -162,7 +163,7 @@ const Plans = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
-                        className="text-xl text-slate-600 max-w-3xl mx-auto"
+                        className="text-xl text-slate-600 max-w-2xl mx-auto"
                     >
                         {plansInfo.subtitle || "Our Annual Maintenance Contracts (AMC) provide complete IT support to keep your business running smoothly. Choose from flexible plans designed for homes, small businesses, and enterprises."}
                     </motion.p>
@@ -173,7 +174,7 @@ const Plans = () => {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16"
+                    className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16 max-w-6xl mx-auto"
                 >
                     <div className="relative rounded-3xl overflow-hidden shadow-xl group h-full max-h-[400px]">
                         <img
@@ -208,6 +209,110 @@ const Plans = () => {
                         </ul>
                     </div>
                 </motion.div>
+
+                {/* Trust & Statistics Section */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="bg-gradient-to-br from-primary-50 via-blue-50 to-indigo-50 rounded-3xl p-8 md:p-12 mb-16 shadow-lg border border-primary-100"
+                >
+                    <div className="text-center mb-10">
+                        <h3 className="text-3xl md:text-4xl font-bold text-slate-900 mb-3">
+                            Trusted by Businesses Across India
+                        </h3>
+                        <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+                            Join hundreds of satisfied clients who trust us for their IT maintenance needs
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+                        {[
+                            { icon: Users, value: "100+", label: "Happy Clients", color: "text-blue-600", bg: "bg-blue-100" },
+                            { icon: Star, value: "99%", label: "Satisfaction Rate", color: "text-amber-600", bg: "bg-amber-100" },
+                            { icon: Clock, value: "2hrs", label: "Avg Response Time", color: "text-green-600", bg: "bg-green-100" },
+                            { icon: Shield, value: "24/7", label: "Support Available", color: "text-purple-600", bg: "bg-purple-100" }
+                        ].map((stat, idx) => (
+                            <motion.div
+                                key={idx}
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: idx * 0.1 }}
+                                className="bg-white rounded-2xl p-6 text-center shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                            >
+                                <div className={`w-14 h-14 ${stat.bg} rounded-full flex items-center justify-center mx-auto mb-4`}>
+                                    <stat.icon className={`w-7 h-7 ${stat.color}`} />
+                                </div>
+                                <div className={`text-3xl md:text-4xl font-bold ${stat.color} mb-2`}>
+                                    {stat.value}
+                                </div>
+                                <div className="text-sm text-slate-600 font-medium">
+                                    {stat.label}
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+
+                    <div className="mt-10 text-center">
+                        <div className="flex flex-wrap justify-center gap-4 items-center">
+                            <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm">
+                                <Check className="w-5 h-5 text-green-600" />
+                                <span className="text-sm font-medium text-slate-700">ISO Certified</span>
+                            </div>
+                            <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm">
+                                <Check className="w-5 h-5 text-green-600" />
+                                <span className="text-sm font-medium text-slate-700">Genuine Parts</span>
+                            </div>
+                            <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm">
+                                <Check className="w-5 h-5 text-green-600" />
+                                <span className="text-sm font-medium text-slate-700">Expert Technicians</span>
+                            </div>
+                            <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm">
+                                <Check className="w-5 h-5 text-green-600" />
+                                <span className="text-sm font-medium text-slate-700">No Hidden Charges</span>
+                            </div>
+                        </div>
+                    </div>
+                </motion.div>
+
+                {/* Dynamic Detailed Sections */}
+                {(content.plans?.detailedSections || []).map((section, idx) => (
+                    <motion.div
+                        key={section.id || idx}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="mb-16 max-w-5xl mx-auto w-full"
+                    >
+                        <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mb-6">{section.title}</h3>
+
+                        <div className="relative">
+                            {/* Floating Image */}
+                            <div className={`relative rounded-xl overflow-hidden shadow-lg group mb-4 ${section.imagePosition === 'left'
+                                ? 'float-left mr-6 md:mr-8'
+                                : 'float-right ml-6 md:ml-8'
+                                } w-full sm:w-[280px] md:w-[350px] aspect-[4/3]`}>
+                                <img
+                                    src={section.image}
+                                    alt={section.title}
+                                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
+                            </div>
+
+                            {/* Text Content */}
+                            <div
+                                className="text-base text-slate-600 leading-relaxed prose prose-slate max-w-none prose-headings:text-slate-900 prose-p:text-slate-600 prose-li:text-slate-600 prose-strong:text-slate-900 prose-code:text-slate-800 prose-code:bg-slate-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded"
+                                style={{ overflowWrap: 'anywhere', maxWidth: '100%' }}
+                                dangerouslySetInnerHTML={{ __html: section.content }}
+                            />
+
+                            {/* Clear float */}
+                            <div className="clear-both"></div>
+                        </div>
+                    </motion.div>
+                ))}
 
                 {/* Random Video Section */}
                 <motion.div
@@ -301,7 +406,7 @@ const Plans = () => {
 
 
                 {/* Plans Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 px-4">
                     {plansArray.map((plan, idx) => {
                         const colors = gradientColors[plan.id] || gradientColors.basic;
                         const isPopular = colors.popular;
@@ -313,70 +418,69 @@ const Plans = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: idx * 0.1 }}
-                                className="relative group"
+                                className="relative"
                             >
-                                {/* Popular Badge */}
-                                {isPopular && (
-                                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20">
-                                        <div className="flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-sm font-semibold rounded-full shadow-lg">
-                                            <Star className="w-4 h-4 fill-current" />
-                                            Most Popular
-                                        </div>
-                                    </div>
-                                )}
+                                <div className={`relative h-full bg-white rounded-[2rem] p-8 overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl flex flex-col ${isPopular ? 'border-2 border-violet-500 shadow-xl shadow-violet-100 ring-4 ring-violet-50/50' : 'border border-slate-100 shadow-lg'}`}>
 
-                                <div className={`h-full rounded-3xl bg-gradient-to-br ${colors.bg} border-2 ${isPopular ? 'border-indigo-300 shadow-xl shadow-indigo-100' : 'border-slate-200'} p-8 hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 group-hover:border-primary-300`}>
-                                    {/* Top Color Bar */}
-                                    <div className={`w-full h-1.5 ${colors.accent} rounded-full mb-6`} />
+                                    {/* Top Right Blob Accent */}
+                                    <div className={`absolute -top-16 -right-16 w-48 h-48 rounded-full blur-3xl opacity-60 pointer-events-none ${colors.blob}`} />
 
-                                    {/* Header */}
-                                    <div className="flex items-start justify-between mb-6">
-                                        <div>
-                                            <span className={`inline-block px-3 py-1 rounded-lg text-xs font-semibold mb-2 ${colors.badge}`}>
-                                                {plan.name}
+                                    {/* Best Value Badge */}
+                                    {isPopular && (
+                                        <div className="absolute top-8 right-8 z-10">
+                                            <span className="inline-block px-4 py-1.5 bg-violet-100 text-violet-700 text-xs font-bold uppercase tracking-wider rounded-full">
+                                                Best Value
                                             </span>
-                                            <p className="text-slate-500 text-sm">{plan.description}</p>
                                         </div>
-                                        <div className={`p-3 rounded-2xl ${colors.icon} group-hover:scale-110 transition-transform shadow-sm`}>
-                                            <DynamicIcon name={plan.iconName} className="w-8 h-8" />
+                                    )}
+
+                                    {/* Header Section */}
+                                    <div className="relative z-10 mb-6">
+
+                                        {/* Icon */}
+                                        <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 shadow-sm ${colors.iconBg} ${colors.accent}`}>
+                                            {plan.iconName ? (
+                                                <DynamicIcon name={plan.iconName} className="w-8 h-8" />
+                                            ) : (
+                                                plan.id === 'basic' ? <Cpu className="w-8 h-8" /> :
+                                                    plan.id === 'standard' ? <Server className="w-8 h-8" /> :
+                                                        <Database className="w-8 h-8" />
+                                            )}
                                         </div>
+
+                                        {/* Plan Name */}
+                                        <h3 className="text-2xl font-bold text-slate-900 mb-4">{plan.name}</h3>
+
+                                        {/* Price */}
+                                        <div className="flex items-baseline gap-1 mb-2">
+                                            <span className={`text-5xl font-extrabold ${colors.accent}`}>{plan.price}</span>
+                                            <span className="text-slate-400 font-medium text-lg">/year</span>
+                                        </div>
+                                        <p className="text-slate-400 text-xs font-medium">Billed Annually • GST Extra</p>
                                     </div>
 
-                                    {/* Price */}
-                                    <div className="mb-8">
-                                        <div className="flex items-baseline">
-                                            <span className="text-5xl font-bold text-slate-900">{plan.price}</span>
-                                            <span className="text-slate-500 ml-2 text-lg">{plan.period}</span>
-                                        </div>
-                                        <p className="text-slate-400 text-sm mt-1">Billed annually • GST Extra</p>
-                                    </div>
+                                    {/* Divider */}
+                                    <div className="w-full h-px bg-slate-50 mb-8 relative z-10" />
 
                                     {/* Features */}
-                                    <ul className="space-y-4 mb-8">
+                                    <ul className="space-y-5 mb-10 flex-grow relative z-10">
                                         {(plan.features || []).map((feature, i) => (
-                                            <li key={i} className="flex items-start gap-3">
-                                                <div className="mt-0.5">
-                                                    <Check className="w-5 h-5 text-green-500" />
+                                            <li key={i} className="flex items-start gap-4">
+                                                <div className={`mt-0.5 w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 bg-white shadow-sm ${colors.accent}`}>
+                                                    <Check className="w-3 h-3" strokeWidth={3} />
                                                 </div>
-                                                <span className="text-slate-700">{feature}</span>
+                                                <span className="text-slate-600 text-sm font-medium leading-relaxed">{feature}</span>
                                             </li>
                                         ))}
                                     </ul>
 
-                                    {/* CTA Buttons */}
-                                    <div className="space-y-3">
+                                    {/* Action Button */}
+                                    <div className="relative z-10 mt-auto">
                                         <Link
                                             to={`/plan/${plan.id}`}
-                                            className={`flex items-center justify-center gap-2 w-full py-4 rounded-xl text-white font-semibold ${colors.button} transition-all shadow-lg hover:shadow-xl group/btn`}
+                                            className={`block w-full py-4 rounded-xl text-white font-bold text-center text-sm tracking-wide transition-all hover:scale-[1.02] active:scale-[0.98] ${colors.button}`}
                                         >
-                                            View Details
-                                            <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                                        </Link>
-                                        <Link
-                                            to="/contact"
-                                            className="flex items-center justify-center w-full py-3 rounded-xl text-slate-700 font-medium border-2 border-slate-200 hover:border-primary-300 hover:text-primary-600 transition-all"
-                                        >
-                                            Enquire Now
+                                            READ MORE
                                         </Link>
                                     </div>
                                 </div>
