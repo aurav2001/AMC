@@ -170,33 +170,33 @@ const initialContent = {
                 'Unlimited on-site visits',
                 'Dedicated account manager'
             ]
-        }
-    },
-    comparisonTable: {
-        title: "Compare Our Plans",
-        headers: ["Basic", "Standard", "Premium"],
-        rows: [
-            { feature: "Preventive Visits", values: ["2/Year", "4/Year", "Unlimited"] },
-            { feature: "Remote Support", values: ["Business Hours", "24/7 Priority", "24/7 Dedicated"] },
-            { feature: "Parts Included", values: [false, false, true] },
-            { feature: "Standby Device", values: [false, true, true] },
-            { feature: "Server Support", values: [false, true, true] }
+        },
+        comparisonTable: {
+            title: "Compare Our Plans",
+            headers: ["Basic", "Standard", "Premium"],
+            rows: [
+                { feature: "Preventive Visits", values: ["2/Year", "4/Year", "Unlimited"] },
+                { feature: "Remote Support", values: ["Business Hours", "24/7 Priority", "24/7 Dedicated"] },
+                { feature: "Parts Included", values: [false, false, true] },
+                { feature: "Standby Device", values: [false, true, true] },
+                { feature: "Server Support", values: [false, true, true] }
+            ]
+        },
+        additionalInfo: {
+            title: "More Information",
+            description: "Add details here to help users understand better.",
+            image: ""
+        },
+        detailedSections: [
+            {
+                id: 1,
+                title: "Why Maintenance Matters",
+                content: "<p>Regular maintenance keeps your business running smoothly without unexpected downtime.</p>",
+                image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&q=80",
+                imagePosition: "right"
+            }
         ]
     },
-    additionalInfo: {
-        title: "More Information",
-        description: "Add details here to help users understand better.",
-        image: ""
-    },
-    detailedSections: [
-        {
-            id: 1,
-            title: "Why Maintenance Matters",
-            content: "<p>Regular maintenance ensures your systems run smoothly...</p>",
-            image: "",
-            imagePosition: "right" // 'left' or 'right'
-        }
-    ],
     software: {
         hero: {
             title: "Complete Software Solutions",
@@ -866,6 +866,17 @@ const initialContent = {
             ]
         },
     },
+    about: {
+        dynamicSections: [
+            {
+                id: 1,
+                title: "Our Journey",
+                content: "Founded with a vision to revolutionize IT support, AMC Pro started as a small team of passionate engineers. Today, we stand as a leading example of excellence in the industry, serving hundreds of satisfied clients.",
+                image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                imagePosition: "left"
+            }
+        ]
+    },
     contact: {
         phone: "+91 9810443288",
         email: "kkumar@uniotechit.com",
@@ -879,7 +890,7 @@ const initialContent = {
 
 const ContentContext = createContext();
 
-const API_URL = 'http://localhost:5000/api/content';
+const API_URL = `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/content`;
 
 export const ContentProvider = ({ children }) => {
     const [content, setContent] = useState(initialContent);
