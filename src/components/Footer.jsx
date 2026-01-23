@@ -37,7 +37,7 @@ const Footer = () => {
                         <ul className="space-y-3">
                             <li className="flex items-start space-x-3 text-slate-300">
                                 <MapPin className="w-5 h-5 text-primary-500 shrink-0" />
-                                <span>Noida Sector-63, Haryana (India) Upper Ground Floor Plot No-273, Noida 201306</span>
+                                <span>Noida Sector-63, UP (India) Upper 2nd Floor Plot No-273, Noida 201306</span>
                             </li>
                             <li className="flex items-center space-x-3 text-slate-300">
                                 <Phone className="w-5 h-5 text-primary-500 shrink-0" />

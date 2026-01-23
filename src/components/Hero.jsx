@@ -69,6 +69,8 @@ const Hero = () => {
             className="relative w-full min-h-[650px] md:min-h-[700px] overflow-hidden"
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
+            onTouchStart={() => setIsPaused(true)}
+            onTouchEnd={() => setIsPaused(false)}
         >
             {/* Background Image with Overlay */}
             <AnimatePresence mode="wait">
